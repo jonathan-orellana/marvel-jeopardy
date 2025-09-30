@@ -26,3 +26,52 @@ Players can register, create custom game boards, or play existing ones. Some tri
 ```bash
 git clone https://github.com/<your-username>/marvel-jeopardy-game.git
 cd marvel-jeopardy-game
+
+```
+---
+
+## 🔑 Environment Setup
+
+This project requires a **Marvel API key** to fetch character and trivia data.  
+We use an environment variable so the key is not hard-coded into the source code.
+
+### 1. Get an API Key
+- Create a free account at [developer.marvel.com](https://developer.marvel.com/).
+- Generate a new **API Key**.
+
+### 2. Create a `.env` File
+In the **root of the project**, create a file named `.env` (with no filename, just `.env`).  
+Inside, add your key:
+
+```bash
+MARVEL_API_KEY=your_real_api_key_here
+```
+
+⚠️ Do not commit this `.env` file to GitHub. It should stay private.
+
+---
+
+### 3. Install Dependencies
+```bash
+npm install
+npm start
+```
+
+Visit the app at: http://localhost:3000
+
+---
+
+## 👨‍💻 Contributors
+
+Carlos Orellana
+
+David Nu Nu
+
+---
+
+## 📜 License
+
+This project is for educational purposes under CS4640 at the University of Virginia.
+Not affiliated with or endorsed by Marvel Entertainment.
+
+
