@@ -49,8 +49,6 @@ MARVEL_API_KEY=your_real_api_key_here
 
 ⚠️ Do not commit this `.env` file to GitHub. It should stay private.
 
----
-
 ### 3. Install Dependencies
 ```bash
 npm install
