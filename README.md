@@ -57,7 +57,7 @@ npm install
 npm start
 ```
 
-Visit the app at: http://localhost:3000
+Visit the app at: `http://localhost:3000`
 
 ---
 
