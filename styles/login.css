@@ -1,0 +1,110 @@
+:root {
+  --bg-color: #fcfcfc;
+  --second-bg-color: #f8f8f8;
+  --text-color: black;
+  --main-color: #FF2C2C;
+}
+
+section {
+  padding: 0;
+  margin: 0;
+}
+
+.login {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-image-container,
+.login-form-container {
+  flex: 1;
+}
+
+.login-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-form {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+}
+
+.login-form input {
+  border: 2px solid rgb(200, 200, 200);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 18rem;
+  margin-bottom: 2rem;
+}
+
+#password-input {
+  margin-bottom: 1rem;
+}
+
+.forget-password-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 18rem;
+  margin-bottom: 2rem;
+  transition: 0.3s ease;
+}
+
+.forget-password-container a {
+  color: var(--text-color);
+}
+
+.forget-password-container a:hover {
+  color: var(--main-color);
+}
+
+.button {
+  border: none;
+  background-color: var(--main-color);
+  color: white;
+  border-radius: 0.7rem;
+  padding: 0.5rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 4rem;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.sign-up-message {
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.sign-up-message span {
+  color: var(--text-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sign-up-message span:hover {
+  color: var(--main-color);
+}
