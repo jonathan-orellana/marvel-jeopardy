@@ -1,0 +1,91 @@
+:root {
+  --bg-color: #fcfcfc;
+  --second-bg-color: #f8f8f8;
+  --text-color: black;
+  --main-color: #FF2C2C;
+}
+
+body {
+  margin: 0;
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.logo-container:hover {
+  transform: scale(1.1);
+}
+
+.page-title .logo-container .logo-text {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.page-title .logo-container .logo-image {
+  width: 8rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  grid-template-rows: repeat(6, auto);   
+  gap: 5px;
+  width: 100vw; 
+  height: calc(100vh - 100px); 
+  box-sizing: border-box;
+  padding: 2rem;
+}
+
+.category {
+  background-color: var(--main-color);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 1.5rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell {
+  background: var(--main-color);
+  color: white;
+  border: 2px solid white;
+  text-align: center;
+  padding: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.cell:hover {
+  transform: scale(1.1);
+  color: var(--main-color);
+  background-color: white;
+}
+
+.jeopardy-board {
+  padding: 0;
+  margin: 0;
+}
