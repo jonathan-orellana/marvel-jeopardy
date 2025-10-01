@@ -1,0 +1,66 @@
+:root {
+  --bg-color: #fcfcfc;
+  --second-bg-color: #f8f8f8;
+  --text-color: black;
+  --main-color: #FF2C2C;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home .content-container .logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  transition: 0.3s ease;
+  margin-bottom: 3rem;
+  cursor: pointer;
+}
+
+.logo-container:hover {
+  transform: scale(1.1);
+}
+
+.home .content-container .logo-container .logo-text {
+  font-size: 4.2rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.home .content-container .logo-container .logo-image {
+  width: 15rem;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.button {
+  border: none;
+  background-color: var(--main-color);
+  color: white;
+  border-radius: 0.7rem;
+  padding: 1rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.play-button {
+  padding: 1rem 4.2rem;
+}

@@ -3,6 +3,15 @@
   text-decoration: none;
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
-  color: #333;
+  font-family: Poppins, 'Arial', sans-serif;
+  color: black;
+}
+
+html {
+  font-size: 16px;
+}
+
+section {
+  min-height: 100vh;
+  padding: 20%;
 }

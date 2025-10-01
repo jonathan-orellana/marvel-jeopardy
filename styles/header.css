@@ -1,31 +1,44 @@
+:root {
+  --bg-color: #fcfcfc;
+  --second-bg-color: #f8f8f8;
+  --text-color: black;
+  --main-color: #FF2C2C;
+}
+
 .header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 2.5% 5%;
-
+  padding: 3rem 4rem;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-
-  border: 2px solid gray;
-  
+  z-index: 100;
 }
 
 .logo-container {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.3rem;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.logo-container:hover {
+  transform: scale(1.1);
 }
 
 .logo-container .logo-text {
-  font-size: 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-color);
 }
 
 .logo-container .logo-image {
-  width: 40px;
+  width: 5rem;
 }
 
 .menu-icon {
@@ -34,7 +47,36 @@
   cursor: pointer;
 }
 
+.navbar {
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.navbar a {
+  margin-left: 1.1rem;
+  margin-right: 1.1rem;
+  color: var(--text-color);
+  border-bottom: 2px solid transparent;
+  transition: 0.3s ease;
+}
+
+.navbar a:hover {
+  color: var(--main-color);
+  border-bottom: 2px solid var(--main-color);
+  transform: scale(1.1);
+}
+
 .login-link {
-  text-decoration: none;
-  font-size: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  border-bottom: 2px solid transparent;
+  transition: 0.3s ease;
+}
+
+.login-link:hover {
+  color: var(--main-color);
+  border-bottom: 2px solid var(--main-color);
+  transform: scale(1.1);
 }
