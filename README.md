@@ -70,6 +70,6 @@ David Nu Nu
 ## 📜 License
 
 This project is for educational purposes under CS4640 at the University of Virginia.
-Not affiliated with or endorsed by Marvel Entertainment.
+Not affiliated with or endorsed by Marvel Entertainment. MIT License is available for our code and work.
 
 
