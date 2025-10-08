@@ -18,27 +18,34 @@
 </head>
 
 <body>
-  <header class="header">
-  <a href="../screens/home.html" class="logo-link">
-      <div class="logo-container">
-        <div class="logo-text">Jeopardy</div>
-    <img class="logo-image" src="../assets/marvel-logo.png" alt="marvel-logo">
-      </div>
-    </a>
-    <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-      <path
-        d="M96 160C96 142.3 110.3 128 128 128L512 128C529.7 128 544 142.3 544 160C544 177.7 529.7 192 512 192L128 192C110.3 192 96 177.7 96 160zM96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320zM544 480C544 497.7 529.7 512 512 512L128 512C110.3 512 96 497.7 96 480C96 462.3 110.3 448 128 448L512 448C529.7 448 544 462.3 544 480z" />
-    </svg>
-    <nav class="navbar">
-  <a href="../screens/home.html" class="active">Home</a>
-      <a href="#">Play</a>
-      <a href="#">How to Play</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  <a class="login-link" href="#">Login</a>
-  </header>
+  <header class="header" role="banner">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <a href="./home.html" class="logo-link" aria-label="Marvel Jeopardy Home">
+  <div class="logo-container logo-frame">
+    <img class="logo-image" src="../assets/marvel-logo.png" alt="MARVEL logo">
+    <div class="logo-text">Jeopardy</div>
+  </div>
+</a>
+
+
+  <div class="header-spacer" aria-hidden="true"></div>
+
+  <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
+  <label for="nav-toggle" class="menu-icon" aria-controls="primary-nav" aria-expanded="false">
+    <span class="bar"></span>
+  </label>
+
+  <nav id="primary-nav" class="navbar" aria-label="Primary">
+    <a href="./home.html" class="active">Home</a>
+    <a href="./jeopardy-board.html">Play</a>
+    <a href="./home.html#how-to">How to Play</a>
+    <a href="./home.html#about">About</a>
+    <a href="./home.html#contact">Contact</a>
+    <a href="./login.html" class="login-link">Login</a>
+  </nav>
+</header>
+<main id="main">
   <section class="home">
     <div class="content-container">
       <div class="logo-container">
@@ -55,6 +62,7 @@
       </div>
     </div>
   </section>
+  </main>
 </body>
 
 </html>
