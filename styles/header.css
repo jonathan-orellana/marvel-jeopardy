@@ -227,6 +227,22 @@ button:focus-visible,
   height: auto;
 }
 
+.menu-icon {
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.bar {
+  width: 70%;
+  height: 3px;
+  background: #fff;
+}
+
+
 @media (max-width: 860px) {
   .logo-image {
     width: 72px;
