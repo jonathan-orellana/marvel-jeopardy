@@ -15,12 +15,12 @@
   padding: 3rem;
 }
 
-.question-box h2{
+.question-box h2 {
   font-size: 1.4rem;
   margin-bottom: 3rem;
 }
 
-.question-box h3{
+.question-box h3 {
   font-size: 1rem;
   margin-bottom: 0.8rem;
 }
@@ -62,7 +62,7 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
 
@@ -79,7 +79,7 @@
   color: white;
 }
 
-.dropdown-btn:hover + .dropdown-content,
+.dropdown-btn:hover+.dropdown-content,
 .dropdown-content:hover {
   display: block;
 }
@@ -90,11 +90,11 @@
   height: 100px;
   padding: 20px;
   margin-bottom: 2rem;
-  resize: none;         
-  text-align: left;      
-  vertical-align: top;  
-  line-height: normal;  
-  box-sizing: border-box; 
+  resize: none;
+  text-align: left;
+  vertical-align: top;
+  line-height: normal;
+  box-sizing: border-box;
   font-size: 1rem;
 }
 
@@ -124,7 +124,7 @@
 }
 
 .circle-check input {
-  display: none; 
+  display: none;
 }
 
 .circle-check .circle {
@@ -137,13 +137,13 @@
   transition: 0.3s;
 }
 
-.circle-check input:checked + .circle {
+.circle-check input:checked+.circle {
   background-color: white;
   border: 5px solid var(--main-color);
 }
 
 .add-option div,
-.add-question-btn div{
+.add-question-btn div {
   display: inline-flex;
   align-items: center;
   margin-top: 0.5rem;
@@ -151,14 +151,14 @@
 
 }
 
-.add-option .plus-icon, 
-.add-question-btn .plus-icon{
+.add-option .plus-icon,
+.add-question-btn .plus-icon {
   width: 20px;
   margin-right: 8px;
 }
 
 .add-option p,
-.add-question-btn p{
+.add-question-btn p {
   display: inline;
   color: rgb(150, 150, 150);
   font-size: 13px;

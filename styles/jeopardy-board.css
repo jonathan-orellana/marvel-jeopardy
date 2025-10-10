@@ -41,11 +41,11 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); 
-  grid-template-rows: repeat(6, auto);   
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, auto);
   gap: 5px;
-  width: 100vw; 
-  height: calc(100vh - 100px); 
+  width: 100vw;
+  height: calc(100vh - 100px);
   box-sizing: border-box;
   padding: 2rem;
 }

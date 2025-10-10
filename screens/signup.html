@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,6 +14,7 @@
   <link rel="stylesheet" href="../styles/general.css" />
   <link rel="stylesheet" href="../styles/signup.css" />
 </head>
+
 <body>
 
   <header class="header" role="banner">
@@ -20,10 +22,10 @@
 
     <a href="./home.html" class="logo-link" aria-label="Marvel Jeopardy Home">
       <div class="logo-container logo-frame">
-    <img class="logo-image" src="../assets/marvel-logo.png" alt="MARVEL logo">
-     <div class="logo-text">Jeopardy</div>
-    </div>
-     </a>
+        <img class="logo-image" src="../assets/marvel-logo.png" alt="MARVEL logo">
+        <div class="logo-text">Jeopardy</div>
+      </div>
+    </a>
 
 
     <div class="header-spacer" aria-hidden="true"></div>
@@ -51,25 +53,24 @@
         <form class="sign-up-form" action="#" method="post" novalidate>
           <div class="name-input">
             <label class="sr-only" for="first-name">First name</label>
-            <input id="first-name" name="first_name" type="text" placeholder="First name"
-                   autocomplete="given-name" required>
+            <input id="first-name" name="first_name" type="text" placeholder="First name" autocomplete="given-name"
+              required>
 
             <label class="sr-only" for="last-name">Last name</label>
-            <input id="last-name" name="last_name" type="text" placeholder="Last Name"
-                   autocomplete="family-name" required>
+            <input id="last-name" name="last_name" type="text" placeholder="Last Name" autocomplete="family-name"
+              required>
           </div>
 
           <label class="sr-only" for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="Email"
-                 autocomplete="email" required>
+          <input id="email" name="email" type="email" placeholder="Email" autocomplete="email" required>
 
           <label class="sr-only" for="password">Password</label>
-          <input id="password" name="password" type="password" placeholder="Password"
-                 autocomplete="new-password" aria-describedby="pw-hint" required>
+          <input id="password" name="password" type="password" placeholder="Password" autocomplete="new-password"
+            aria-describedby="pw-hint" required>
 
           <label class="sr-only" for="confirm-password">Confirm Password</label>
-          <input id="confirm-password" name="confirm_password" type="password"
-                 placeholder="Confirm Password" autocomplete="new-password" required>
+          <input id="confirm-password" name="confirm_password" type="password" placeholder="Confirm Password"
+            autocomplete="new-password" required>
 
           <small id="pw-hint" aria-live="polite" style="color:gray;">
             Use at least 8 characters with letters and numbers.
@@ -95,4 +96,5 @@
     </section>
   </main>
 </body>
+
 </html>
