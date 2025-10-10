@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jeopardy Marvel — Board</title>
+  <title>Marvel Jeopardy — Board</title>
 
   <link rel="stylesheet" href="../styles/jeopardy-board.css" />
   <link rel="stylesheet" href="../styles/general.css" />
@@ -23,23 +23,21 @@
       </div>
     </a>
 
-
     <div class="header-spacer" aria-hidden="true"></div>
 
     <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
     <label for="nav-toggle" class="menu-icon" aria-controls="primary-nav" aria-expanded="false">
-      <span class="bar"></span>
+    <span class="bar"></span><span class="sr-only">Menu</span>
     </label>
 
     <nav id="primary-nav" class="navbar" aria-label="Primary">
-      <a href="./home.html">Home</a>
-      <a href="./jeopardy-board.html" class="active">Play</a>
-      <a href="./home.html#how-to">How to Play</a>
-      <a href="./home.html#about">About</a>
-      <a href="./home.html#contact">Contact</a>
-      <a href="./login.html" class="login-link">Login</a>
+    <a href="./home.html">Home</a>
+    <a href="./jeopardy-board.html" class="active" aria-current="page">Play</a>
+    <a href="./about.html">About</a>
+     <a href="./login.html" class="login-link">Login</a>
     </nav>
   </header>
+
 
   <main id="main">
     <section class="jeopardy-board">
