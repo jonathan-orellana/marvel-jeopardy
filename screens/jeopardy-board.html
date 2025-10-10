@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jeopardy Marvel — Board</title>
+  <title>Marvel Jeopardy — Board</title>
 
   <link rel="stylesheet" href="../styles/jeopardy-board.css" />
   <link rel="stylesheet" href="../styles/general.css" />
@@ -11,33 +11,31 @@
 </head>
 <body>
 
-  <header class="header" role="banner">
-    <a class="skip-link" href="#main">Skip to main content</a>
+<header class="header" role="banner">
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-    <a href="./home.html" class="logo-link" aria-label="Marvel Jeopardy Home">
-  <div class="logo-container logo-frame">
-    <img class="logo-image" src="../assets/marvel-logo.png" alt="MARVEL logo">
-    <div class="logo-text">Jeopardy</div>
-  </div>
-</a>
+  <a href="./home.html" class="logo-link" aria-label="Marvel Jeopardy Home">
+    <div class="logo-container logo-frame">
+      <img class="logo-image" src="../assets/marvel-logo.png" alt="MARVEL logo">
+      <div class="logo-text">Jeopardy</div>
+    </div>
+  </a>
 
+  <div class="header-spacer" aria-hidden="true"></div>
 
-    <div class="header-spacer" aria-hidden="true"></div>
+  <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
+  <label for="nav-toggle" class="menu-icon" aria-controls="primary-nav" aria-expanded="false">
+    <span class="bar"></span><span class="sr-only">Menu</span>
+  </label>
 
-    <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
-    <label for="nav-toggle" class="menu-icon" aria-controls="primary-nav" aria-expanded="false">
-      <span class="bar"></span>
-    </label>
+  <nav id="primary-nav" class="navbar" aria-label="Primary">
+    <a href="./home.html">Home</a>
+    <a href="./jeopardy-board.html" class="active" aria-current="page">Play</a>
+    <a href="./about.html">About</a>
+    <a href="./login.html" class="login-link">Login</a>
+  </nav>
+</header>
 
-    <nav id="primary-nav" class="navbar" aria-label="Primary">
-      <a href="./home.html">Home</a>
-      <a href="./jeopardy-board.html" class="active">Play</a>
-      <a href="./home.html#how-to">How to Play</a>
-      <a href="./home.html#about">About</a>
-      <a href="./home.html#contact">Contact</a>
-      <a href="./login.html" class="login-link">Login</a>
-    </nav>
-  </header>
 
   <main id="main">
     <section class="jeopardy-board">
