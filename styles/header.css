@@ -82,8 +82,12 @@ body {
 
 .navbar a:hover,
 .navbar a:focus-visible {
-  border-bottom-color: var(--nav-accent);
+  border-bottom-color: var(--nav-fg);
   outline: none;
+}
+
+.login-link:hover {
+  border-bottom-color: none;
 }
 
 .navbar a.active {

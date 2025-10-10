@@ -43,39 +43,35 @@
 </header>
 
 
-  <main id="main">
-    <section class="login">
-      <div class="login-image-container">
-        <img src="../assets/marvel-comic-background.jpg" alt="Black-and-white Marvel comic collage">
-      </div>
+<section class="login">
+  <div class="login-image-container">
+    <img src="../assets/marvel-comic-background.jpg" alt="marvel-comic-background">
+  </div>
+  <div class="login-form-container">
+    <div class="title-form">
+      Login
+    </div>
+    <form class="login-form" action="">
+      <label for="">Username</label>
+      <input type="text" name="" id="">
 
-      <div class="login-form-container">
-        <div class="title-form">Login</div>
-
-        <form class="login-form" action="#" method="post">
-          <label for="username">Username</label>
-          <input id="username" name="username" type="text" autocomplete="username" required>
-
-          <label for="password-input">Password</label>
-          <input id="password-input" name="password" type="password" autocomplete="current-password" required>
-        </form>
-
-        <div class="forgot-password-container">
-          <div></div>
-          <a href="#">Forgot Password?</a>
-        </div>
-
-        <div>
-          <button class="button" type="submit" form="noop">Login</button>
-        </div>
-
-        <div class="sign-up-message">
-          Don't have an account?
-          <a href="./signup.html"><span>Sign Up</span></a>
-        </div>
-      </div>
-    </section>
-  </main>
+      <label for="">Password</label>
+      <input id="password-input" type="password">
+    </form>
+    <div class="forget-password-container">
+      <div></div>
+      <a href="home.html">Forget Password?</a>
+    </div>
+    <div>
+      <button class="button">
+        Login
+      </button>
+    </div>
+    <div class="sign-up-message">
+      Don't have an account? <a href="signup.html"><span>Sign Up</span></a>
+    </div>
+  </div>
+</section>
 </body>
 
 </html>

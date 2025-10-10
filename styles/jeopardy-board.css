@@ -89,3 +89,24 @@ body {
   padding: 0;
   margin: 0;
 }
+
+/* Tablet (2–3 columns) */
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile (1–2 columns) */
+@media (max-width: 576px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    gap: 8px;
+  }
+
+  .cell, .category {
+    font-size: 0.9rem; /* smaller text on phones */
+    padding: 0.5rem;
+  }
+}

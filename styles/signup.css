@@ -126,3 +126,17 @@ section {
 .sign-up-message span:hover {
   color: var(--main-color);
 }
+
+/* Small phones */
+@media (max-width: 768px) {
+  .login-image-container{
+    display: none;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+  .login-image-container{
+    display: none;
+  }
+}
