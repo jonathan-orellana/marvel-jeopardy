@@ -42,6 +42,7 @@
 
     <nav id="primary-nav" class="navbar" aria-label="Primary">
       <a href="index.php?command=home" class="active" aria-current="page">Home</a>
+      <a href="index.php?command=sets">My Sets</a>
       <a href="index.php?command=play">Play</a>
       <a href="index.php?command=about">About</a>
 

@@ -1,182 +1,32 @@
-/* Authors / Contributions
-   Carlos Orellana
-   David Nu Nu
-*/
-
-:root {
-  --bg-color: #fcfcfc;
-  --second-bg-color: #f8f8f8;
-  --text-color: black;
-  --main-color: #FF2C2C;
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
 }
 
-section {
-  padding: 5rem;
+.button-container {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
 }
 
 .question-box {
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-
-  display: flex;
-  flex-direction: column;
-  padding: 3rem;
-}
-
-.question-box h2 {
-  font-size: 1.4rem;
-  margin-bottom: 3rem;
-}
-
-.question-box h3 {
-  font-size: 1rem;
-  margin-bottom: 0.8rem;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 2rem;
-}
-
-.dropdown-btn {
-  background-color: white;
-  color: black;
-  padding: 10px 16px;
   border: 1px solid #ccc;
-  border-radius: 20px;
-  width: 15rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+textarea {
+  width: 100%;
+  height: 60px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  resize: vertical;
+}
+
+input[type="text"] {
+  margin-left: 8px;
+}
+
+button {
   cursor: pointer;
-}
-
-.dropdown div {
-  color: rgb(120, 120, 120);
-}
-
-.dropdown-icon {
-  width: 18px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: white;
-  min-width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 1;
-}
-
-.dropdown-content .option {
-  color: rgb(120, 120, 120);
-  font-size: 14px;
-  padding: 10px 14px;
-  cursor: pointer;
-  transition: 0.1s ease;
-}
-
-.dropdown-content .option:hover {
-  background-color: var(--main-color);
-  color: white;
-}
-
-.dropdown-btn:hover+.dropdown-content,
-.dropdown-content:hover {
-  display: block;
-}
-
-.question-input {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  height: 100px;
-  padding: 20px;
-  margin-bottom: 2rem;
-  resize: none;
-  text-align: left;
-  vertical-align: top;
-  line-height: normal;
-  box-sizing: border-box;
-  font-size: 1rem;
-}
-
-.option-input {
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-}
-
-.option-input .text-input {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 10px 16px;
-  font-size: 14px;
-  width: 300px;
-  margin-left: 20px;
-}
-
-.option-input .check-input {
-  border: 1px solid #ccc;
-  border-radius: 50%;
-}
-
-.add-question-btn {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.circle-check input {
-  display: none;
-}
-
-.circle-check .circle {
-  width: 24px;
-  height: 24px;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.circle-check input:checked+.circle {
-  background-color: white;
-  border: 5px solid var(--main-color);
-}
-
-.add-option div,
-.add-question-btn div {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 0.5rem;
-  cursor: pointer;
-
-}
-
-.add-option .plus-icon,
-.add-question-btn .plus-icon {
-  width: 20px;
-  margin-right: 8px;
-}
-
-.add-option p,
-.add-question-btn p {
-  display: inline;
-  color: rgb(150, 150, 150);
-  font-size: 13px;
-}
-
-.add-question-btn .plus-icon {
-  width: 25px;
-}
-
-.add-question-btn p {
-  font-size: 18px;
 }
