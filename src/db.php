@@ -1,13 +1,12 @@
 <?php
 // Read from environment variables
-$host     = getenv('DB_HOST')     ?: 'db';
-$port     = getenv('DB_PORT')     ?: '5432';
-$database = getenv('DB_NAME')     ?: 'example';
-$user     = getenv('DB_USER')     ?: 'localuser';
-$password = getenv('DB_PASSWORD') ?: 'cs4640LocalUser!';
+$host     = getenv('DB_HOST')     ?: 'localhost';
+$database = getenv('DB_NAME')     ?: 'qrk9cs';
+$user     = getenv('DB_USER')     ?: 'qrk9cs';
+$password = getenv('DB_PASSWORD') ?: '3OhZKsDHD5Mc';
 
 // Try to connect to cs4610 db (intended for deployment)
-$db = @pg_connect("host=$host port=$port dbname=$database user=$user password=$password");
+$db = @pg_connect("host=$host dbname=$database user=$user password=$password");
 
 // If the connection failed, try local (intended for testing)
 if (!$db) {

@@ -11,16 +11,15 @@ CREATE TABLE IF NOT EXISTS app_user (
 CREATE TABLE IF NOT EXISTS question (
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES app_user(id) ON DELETE CASCADE,
-  set_id INT REFERENCES question_set(id) ON DELETE CASCADE,  -- link to a question set
-  type TEXT NOT NULL,              -- "Multiple Choice" | "True or False" | "Response"
+  set_id INT REFERENCES question_set(id) ON DELETE CASCADE,
+  type TEXT NOT NULL,              -- question type
   prompt TEXT NOT NULL,
-  options JSONB,                   -- ["A","B","C","D"] (null for TF/Response)
-  correct_index INT,               -- 0..3 for MC, null otherwise
-  correct_bool BOOLEAN,            -- true/false for TF, null otherwise
-  correct_text TEXT,               -- expected text for Response, null otherwise
+  options JSONB,                   -- mc options
+  correct_index INT,               -- mc correct
+  correct_bool BOOLEAN,            -- true/false
+  correct_text TEXT,               -- response
   created_at TIMESTAMP DEFAULT NOW()
 );
-
 
 -- question set
 CREATE TABLE IF NOT EXISTS question_set (
