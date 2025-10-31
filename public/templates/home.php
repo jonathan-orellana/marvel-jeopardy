@@ -16,9 +16,9 @@
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="../styles/header.css">
-  <link rel="stylesheet" href="../styles/general.css">
-  <link rel="stylesheet" href="../styles/home.css">
+  <link rel="stylesheet" href="static/styles/header.css">
+  <link rel="stylesheet" href="static/styles/general.css">
+  <link rel="stylesheet" href="static/styles/home.css">
 
 </head>
 
@@ -28,7 +28,7 @@
 
     <a href="./home.html" class="logo-link" aria-label="Marvel Jeopardy Home">
       <div class="logo-container logo-frame">
-        <img class="logo-image" src="../assets/marvel-logo.png" alt="MARVEL logo">
+        <img class="logo-image" src="static/assets/marvel-logo.png" alt="MARVEL logo">
         <div class="logo-text">Jeopardy</div>
       </div>
     </a>
@@ -53,7 +53,7 @@
     <section class="home">
       <div class="content-container">
         <div class="logo-container">
-          <img class="logo-image" src="../assets/marvel-logo.png" alt="marvel-logo">
+          <img class="logo-image" src="static/assets/marvel-logo.png" alt="marvel-logo">
           <div class="logo-text">Jeopardy</div>
         </div>
         <div class="button-container">
