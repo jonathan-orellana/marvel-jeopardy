@@ -53,14 +53,6 @@ function handle_signup($db) {
         $out['errors'][] = "Database error: " . pg_last_error($db);
         return $out;
     }
-
-    // success
-    if (session_status() === PHP_SESSION_NONE) { session_start(); }
-    $_SESSION['user'] = $first;
-    setcookie("last_email", $email, time() + 3600);
-
-    $out['ok'] = true;
-    return $out;
 }
 
 
@@ -96,10 +88,11 @@ function handle_login($db) {
         return $out;
     }
 
-    // success: set session + cookie
+    // set session + cookie
     if (session_status() === PHP_SESSION_NONE) { session_start(); }
-    $_SESSION['user_id']    = $u['id'];
+    $_SESSION['user_id']    = (int)$u['id'];
     $_SESSION['first_name'] = $u['first_name'];
+    $_SESSION['user']       = $u['first_name']; 
     setcookie("last_email", $email, time() + 3600);
 
     $out['ok'] = true;
