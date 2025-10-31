@@ -23,11 +23,14 @@
 </head>
 
 <body>
+  <?php
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+  }
+  ?>
   <header class="header" role="banner">
-    <a class="skip-link" href="#main">Skip to main content</a>
-
-    <a href="./home.html" class="logo-link" aria-label="Marvel Jeopardy Home">
-      <div class="logo-container logo-frame">
+    <a href="index.php?command=home" class="logo-link" aria-label="Marvel Jeopardy Home">
+      <div class="logo-container">
         <img class="logo-image" src="static/assets/marvel-logo.png" alt="MARVEL logo">
         <div class="logo-text">Jeopardy</div>
       </div>
@@ -35,16 +38,19 @@
 
     <div class="header-spacer" aria-hidden="true"></div>
 
-    <input type="checkbox" id="nav-toggle" aria-label="Toggle navigation">
-    <label for="nav-toggle" class="menu-icon" aria-controls="primary-nav" aria-expanded="false">
-      <span class="bar"></span><span class="sr-only">Menu</span>
-    </label>
+    <img class="menu-icon" src="static/assets/icons/menu.svg" alt="">
 
     <nav id="primary-nav" class="navbar" aria-label="Primary">
-      <a href="./home.html" class="active" aria-current="page">Home</a>
-      <a href="./jeopardy-board.html">Play</a>
-      <a href="./about.html">About</a>
-      <a href="./login.html" class="login-link">Login</a>
+      <a href="index.php?command=home" class="active" aria-current="page">Home</a>
+      <a href="index.php?command=play">Play</a>
+      <a href="index.php?command=about">About</a>
+
+      <!--if user login-->
+      <?php if (isset($_SESSION['user'])): ?>
+        <a href="index.php?command=logout" class="login-link">Logout</a>
+      <?php else: ?>
+        <a href="index.php?command=login" class="login-link">Login</a>
+      <?php endif; ?>
     </nav>
   </header>
 
@@ -60,13 +66,17 @@
           <button class="button play-button">
             Play
           </button>
-          <button class="button create-a-game-button">
+          <a href="index.php?command=create_game">
+            <button class="button create-a-game-button">
             Create a Game
           </button>
+          </a>
         </div>
       </div>
     </section>
   </main>
+
+  <script src="static/scripts/header.js"></script>
 </body>
 
 </html>

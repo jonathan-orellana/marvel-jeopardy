@@ -75,11 +75,18 @@ section {
 }
 
 .forget-password-container a {
+  font-size: 16px;
   color: var(--text-color);
 }
 
 .forget-password-container a:hover {
   color: var(--main-color);
+}
+
+.login-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
@@ -116,14 +123,14 @@ section {
 
 /* Small phones */
 @media (max-width: 768px) {
-  .login-image-container{
+  .login-image-container {
     display: none;
   }
 }
 
 /* Tablets */
 @media (min-width: 768px) and (max-width: 991px) {
-  .login-image-container{
+  .login-image-container {
     display: none;
   }
 }

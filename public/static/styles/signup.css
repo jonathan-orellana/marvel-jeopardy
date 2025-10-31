@@ -117,8 +117,7 @@ section {
   align-items: center;
   font-size: 0.7rem;
   width: 20rem;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 16px;
   color: gray;
 }
 
@@ -132,16 +131,31 @@ section {
   color: var(--main-color);
 }
 
+.terms-and-condition-checkbox {
+  flex: 1;
+  margin-top: 16px;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-button {
+  margin-top: 2rem;
+}
+
 /* Small phones */
 @media (max-width: 768px) {
-  .login-image-container{
+  .login-image-container {
     display: none;
   }
 }
 
 /* Tablets */
 @media (min-width: 768px) and (max-width: 991px) {
-  .login-image-container{
+  .login-image-container {
     display: none;
   }
 }

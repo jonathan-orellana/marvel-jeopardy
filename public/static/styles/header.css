@@ -15,21 +15,6 @@ body {
   padding-top: var(--header-height);
 }
 
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  background: #000;
-  color: #fff;
-  padding: .5rem .75rem;
-  z-index: 10000;
-}
-
-.skip-link:focus {
-  left: .5rem;
-  top: .5rem;
-}
-
 .header {
   position: fixed;
   top: 0;
@@ -56,6 +41,11 @@ body {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
+  transition: 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
 }
 
 .logo-text {
@@ -80,7 +70,7 @@ body {
   color: var(--nav-fg);
   text-decoration: none;
   font-weight: 600;
-  padding: .5rem .25rem;
+  padding: .2rem .25rem;
   border-bottom: 2px solid transparent;
   transition: border-color .2s ease, transform .2s ease, color .2s ease;
 }
@@ -89,10 +79,7 @@ body {
 .navbar a:focus-visible {
   border-bottom-color: var(--nav-fg);
   outline: none;
-}
-
-.login-link:hover {
-  border-bottom-color: none;
+  transform: translateY(-5px);
 }
 
 .navbar a.active {
@@ -101,100 +88,28 @@ body {
 
 .navbar .login-link {
   margin-left: 1rem;
-  padding: .45rem .9rem;
+  padding: .4rem 1.2rem;
   border: 2px solid var(--nav-fg);
   border-radius: 999px;
+  background: white;
+  color: black;
 }
 
 .navbar .login-link:hover,
 .navbar .login-link:focus-visible {
-  background: var(--nav-fg);
-  color: var(--nav-bg);
-}
-
-#nav-toggle {
-  position: absolute;
-  left: -9999px;
+  background: black;
+  color: white;
 }
 
 .menu-icon {
   display: none;
-  width: 42px;
-  height: 42px;
-  border-radius: .5rem;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-}
-
-.menu-icon .bar,
-.menu-icon .bar::before,
-.menu-icon .bar::after {
-  content: "";
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--nav-fg);
-  position: relative;
-  transition: transform .2s ease, opacity .2s ease;
-}
-
-.menu-icon .bar::before {
-  position: absolute;
-  top: -7px;
-  left: 0;
-}
-
-.menu-icon .bar::after {
-  position: absolute;
-  top: 7px;
-  left: 0;
 }
 
 .header-spacer {
   flex: 1;
 }
 
-@media (max-width: 860px) {
-  .menu-icon {
-    display: inline-flex;
-  }
-
-  .navbar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: var(--header-height);
-    background: var(--nav-bg);
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    padding: .5rem 0;
-    gap: .25rem;
-    border-top: 1px solid rgba(255, 255, 255, .08);
-  }
-
-  #nav-toggle:checked~.navbar {
-    display: flex;
-  }
-
-  #nav-toggle:checked+label .bar {
-    transform: rotate(45deg);
-  }
-
-  #nav-toggle:checked+label .bar::before {
-    transform: rotate(90deg);
-    top: 0;
-  }
-
-  #nav-toggle:checked+label .bar::after {
-    opacity: 0;
-  }
-
-  .logo-image {
-    width: 72px;
-  }
-}
 
 a:focus-visible,
 button:focus-visible,
@@ -215,10 +130,9 @@ button:focus-visible,
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.logo-link:hover .logo-frame,
-.logo-link:focus-visible .logo-frame {
+.logo-link:hover,
+.logo-link:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, .15) inset;
 }
 
 .header .logo-text {
@@ -232,30 +146,47 @@ button:focus-visible,
   height: auto;
 }
 
-.menu-icon {
-  cursor: pointer;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.bar {
-  width: 70%;
-  height: 3px;
-  background: #fff;
-}
-
-
 @media (max-width: 860px) {
+  .menu-icon {
+    display: block;
+  }
+
   .logo-image {
     width: 72px;
   }
 
-  .logo-frame {
-    padding: .24rem .48rem;
-    gap: .4rem;
+  .navbar {
+    margin: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--nav-bg);
+    display: none;
+  }
+
+  .navbar a {
+    text-align: center;
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    border-bottom: none;
+  }
+
+  .navbar.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navbar .login-link {
+    margin-bottom: 2rem;
+    margin-left: 0px;
+  }
+
+  .logo-image {
+    width: 72px;
   }
 }
