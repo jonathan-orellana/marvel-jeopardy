@@ -48,7 +48,6 @@ function render() {
   `).join('');
 }
 
-// ---- Event Listeners ----
 document.addEventListener('change', event => {
   if (event.target.dataset.typeIndex !== undefined) {
     const questionIndex = Number(event.target.dataset.typeIndex);
@@ -107,7 +106,7 @@ document.querySelector('#submit-questions').addEventListener('click', async () =
     return;
   }
 
-  // Simple validation of each question
+  //question field validation
   for (let i = 0; i < questions.length; i++) {
     const q = questions[i];
     if (!q.text.trim()) { alert(`Question ${i + 1}: enter the question text.`); return; }
@@ -147,17 +146,15 @@ document.querySelector('#submit-questions').addEventListener('click', async () =
       body: JSON.stringify(payload)
     });
 
-    // --- minimal addition: only parse JSON if it is JSON ---
+    // parse JSON if it is JSON 
     if (!res.ok) throw new Error(await res.text());
     const ct = res.headers.get('content-type') || '';
     if (!ct.includes('application/json')) throw new Error(await res.text());
     const data = await res.json();
-    // -------------------------------------------------------
 
     if (data.ok) {
       alert(`Saved set #${data.set_id} with ${data.inserted} question(s).`);
-      // Optional: redirect to the set page
-      window.location.href = `index.php?command=view_set&id=${data.set_id}`;
+      window.location.href = `index.php?command=sets&id=${data.set_id}`;
     } else {
       alert('Error: ' + (data.error || 'Unknown'));
     }

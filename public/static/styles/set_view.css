@@ -1,3 +1,12 @@
+body {
+  padding: 5rem;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .question-list {
   list-style: none;
   padding: 0;
@@ -9,6 +18,7 @@
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 1rem;
+  width: clamp(300px, 80vw, 1200px);
 }
 
 .question-header {
@@ -23,7 +33,9 @@
 
 .input-full {
   width: 100%;
-  padding: 4px;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
 }
 
 .mc-option {
@@ -37,23 +49,31 @@
 .btn-delete,
 .btn-delete-set {
   margin-top: 8px;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 8px 12px;
+  border-radius: 20px;
   border: none;
   cursor: pointer;
-}
-
-.btn-save {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-delete,
-.btn-delete-set {
-  background-color: #e74c3c;
+  background-color: black;
   color: white;
 }
 
 .section {
   margin: 8px 0;
+}
+
+.update-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-to-set {
+  font-size: 14px;
+  padding: 10px;
+}
+
+.back-to-set a {
+  color: #7e7c7c;
+  text-decoration: underline;
+  font-weight: 600;
 }

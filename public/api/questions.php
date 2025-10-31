@@ -1,5 +1,4 @@
 <?php
-// /public/api/questions.php
 error_reporting(E_ALL);
 ini_set('display_errors', '0');
 ini_set('log_errors', '1');
@@ -77,6 +76,11 @@ if ($method === 'POST') {
         "DELETE FROM question WHERE id = $1 AND user_id = $2",
         [$id, $user_id]
       );
+
+      if (!empty($_POST['redirect'])) {
+        header('Location: ' . $_POST['redirect']);
+        exit;
+      }
       echo json_encode(['ok' => (bool)$res]); exit;
     }
 
@@ -87,6 +91,11 @@ if ($method === 'POST') {
         "DELETE FROM question_set WHERE id = $1 AND user_id = $2",
         [$set_id, $user_id]
       );
+
+      if (!empty($_POST['redirect'])) {
+        header('Location: ' . $_POST['redirect']);
+        exit;
+      }
       echo json_encode(['ok' => (bool)$res]); exit;
     }
 
@@ -130,12 +139,12 @@ if ($method === 'POST') {
   $data = json_decode($raw, true);
   if (!is_array($data)) { http_response_code(400); echo json_encode(['ok' => false, 'error' => 'Invalid JSON']); exit; }
 
-  /* ---------- NEW: bulk updates without changing type ---------- */
+
   if (isset($data['updates']) && is_array($data['updates'])) {
     $updated = 0;
     foreach ($data['updates'] as $u) {
       $id     = (int)($u['id'] ?? 0);
-      $type   = trim($u['type'] ?? '');          // used only to know which fields to touch; we do NOT change type
+      $type   = trim($u['type'] ?? '');
       $prompt = trim($u['prompt'] ?? '');
 
       if ($id <= 0 || $prompt === '' || $type === '') { continue; }
@@ -157,7 +166,6 @@ if ($method === 'POST') {
         continue;
       }
 
-      // Note: we DO NOT change "type" in bulk. Only prompt and answer fields.
       $sql = "UPDATE question
               SET prompt = $1,
                   options = $2,
@@ -171,9 +179,8 @@ if ($method === 'POST') {
     }
     echo json_encode(['ok' => true, 'updated' => $updated]); exit;
   }
-  /* ------------------------------------------------------------ */
 
-  // JSON create: { title, questions: [...] }
+  // JSON
   $title = trim($data['title'] ?? '');
   $items = $data['questions'] ?? [];
   if ($title === '' || !is_array($items)) { echo json_encode(['ok' => false, 'error' => 'Missing title or questions']); exit; }

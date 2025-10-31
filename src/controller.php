@@ -77,26 +77,6 @@ class MarvelController {
         include __DIR__ . '/../public/templates/footer.php';
     }
 
-    /*
-    private function showQuestions() {
-        $qs = get_all_questions($this->db); // from qa.php
-        include __DIR__ . '/../public/templates/header.php';
-        include __DIR__ . '/../public/templates/questions.php';
-        include __DIR__ . '/../public/templates/footer.php';
-    }
-
-    private function showAddQuestion() {
-        // must be logged in
-        if (empty($_SESSION['user'])) {
-            header('Location: index.php?command=login');
-            exit;
-        }
-        include __DIR__ . '/../public/templates/header.php';
-        include __DIR__ . '/../public/templates/add_question.php';
-        include __DIR__ . '/../public/templates/footer.php';
-    }
-    */
-
     // Submissions 
     private function signupSubmit() {
         //call auth model
@@ -126,24 +106,6 @@ class MarvelController {
         include __DIR__ . '/../public/templates/login.php';
         include __DIR__ . '/../public/templates/footer.php';
     }
-
-    /*
-    private function addQuestionSubmit() {
-        if (empty($_SESSION['user'])) {
-            header('Location: index.php?command=login');
-            exit;
-        }
-        $result = handle_add_question($this->db);
-        if ($result['ok']) {
-            header('Location: index.php?command=questions');
-            exit;
-        }
-        $this->errors = $result['errors'];
-        include __DIR__ . '/../public/templates/header.php';
-        include __DIR__ . '/../public/templates/add_question.php';
-        include __DIR__ . '/../public/templates/footer.php';
-    }
-    */
 
     private function logout() {
         //destroy session and cookies
