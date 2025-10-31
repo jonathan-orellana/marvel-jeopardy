@@ -28,6 +28,8 @@ class MarvelController {
             case 'login': return $this->showLogin();
             case 'signup': return $this->showSignup();
             case 'create_game' : return $this->showCreateGame();
+            case 'sets': return $this->showSets();
+            case 'view_set': return $this->showViewSet();
 
             //form submissions (post)
             case 'signup_submit': return $this->signupSubmit();
@@ -60,6 +62,18 @@ class MarvelController {
     private function showCreateGame() {
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/create-question.php';
+        include __DIR__ . '/../public/templates/footer.php';
+    }
+
+    private function showSets() {
+        include __DIR__ . '/../public/templates/header.php';
+        include __DIR__ . '/../public/templates/sets.php';
+        include __DIR__ . '/../public/templates/footer.php';
+    }
+
+    private function showViewSet() {
+        include __DIR__ . '/../public/templates/header.php';
+        include __DIR__ . '/../public/templates/set_view.php';
         include __DIR__ . '/../public/templates/footer.php';
     }
 
