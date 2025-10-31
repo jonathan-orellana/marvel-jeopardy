@@ -3,7 +3,7 @@ require __DIR__ . '/../../src/db.php';
 if (!$db) { echo "<p>DB connection not available.</p>"; return; }
 
 if (!isset($_SESSION['user_id'])) {
-  header('Location: ../index.php?command=login');
+  header('Location: index.php?command=login');
   exit;
 }
 
@@ -38,7 +38,7 @@ $q_res = pg_query_params($db,
   <body>
     <?php
     if (!isset($_SESSION['user_id'])) {
-      header('Location: ../index.php?command=login');
+      header('Location: index.php?command=login');
       exit;
     }
     ?>

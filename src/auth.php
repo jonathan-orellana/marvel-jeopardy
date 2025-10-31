@@ -1,7 +1,6 @@
 <?php
-//auth model, does validation + insert user
+//auth model
 function handle_signup($db) {
-    // always return this shape
     $out = ['ok' => false, 'errors' => []];
 
     // collect data input (signup form)
