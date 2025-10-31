@@ -1,3 +1,5 @@
+<!-- /public/templates/signup.php -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,35 +47,45 @@
 
 
 <section class="login">
-
   <div class="login-form-container">
-    <div class="title-form">
-      Create an Account
-    </div>
-    <form class="sign-up-form" action="">
-      <div class="name-input">
-        <input type="text" name="" id="" placeholder="First name">
-        <input type="text" name="" id="" placeholder="Last Name">
+    <div class="title-form">Create an Account</div>
+
+    <!--Show if we have some validation error or any other-->
+    <?php if (!empty($errors)): ?>
+      <div style="color:red; margin-bottom:8px;">
+        <?php foreach ($errors as $e): ?>
+          <p><?= htmlspecialchars($e) ?></p>
+        <?php endforeach; ?>
       </div>
-      <input type="text" name="" id="" placeholder="Email">
-      <input type="text" name="" id="" placeholder="Password">
-      <input type="text" name="" id="password-input" placeholder="Confirm Password">
+    <?php endif; ?>
+    
+    <!--action: Go to index.php, command field signup_submit-->
+    <form class="sign-up-form" method="post" action="index.php?command=signup_submit" novalidate>
+      <div class="name-input">
+        <input type="text" name="first_name" placeholder="First name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+      </div>
+
+      <!--Show email if cookie exist-->
+      <input type="email" name="email"
+             placeholder="Email"
+             required
+             value="<?= htmlspecialchars($_COOKIE['last_email'] ?? '') ?>">
+
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="password" name="confirm_password" id="password-input" placeholder="Confirm Password" required>
+
+      <div class="sign-up-message">
+        <input type="checkbox" class="terms-and-condition-checkbox" id="terms" name="terms">
+        <label for="terms">
+          By checking this box, you confirm that you have read and agree to the <span>Terms and Conditions.</span>
+        </label>
+      </div>
+
+      <button class="button">Sign Up</button>
     </form>
-
-    <div class="sign-up-message">
-      <input type="checkbox" class="terms-and-condition-checkbox" id="terms">
-      <label for="terms">
-        By checking this box, you confirm that you have read and agree to the <span>Terms and Conditions.</span>
-      </label>
-    </div>
-
-    <div>
-      <button class="button">
-        Sign Up
-      </button>
-    </div>
-
   </div>
+
   <div class="login-image-container">
     <img src="../assets/marvel-comic-background-3.jpg" alt="marvel-comic-background">
   </div>
