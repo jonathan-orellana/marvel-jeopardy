@@ -2,10 +2,10 @@
 require __DIR__ . '/../../src/db.php'; 
 if (!$db) { echo "<p>DB connection not available.</p>"; return; }
 
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
+if (!isset($_SESSION['user_id'])) {
+  header('Location: index.php?command=login');
+  exit;
 }
-if (!isset($_SESSION['user_id'])) { echo "<p>Please log in.</p>"; return; }
 $uid = $_SESSION['user_id'];
 
 $res = pg_query_params($db,
@@ -26,8 +26,9 @@ $res = pg_query_params($db,
 </head>
 <body>
   <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+    if (!isset($_SESSION['user_id'])) {
+      header('Location: index.php?command=login');
+      exit;
     }
     ?>
     <header class="header" role="banner">

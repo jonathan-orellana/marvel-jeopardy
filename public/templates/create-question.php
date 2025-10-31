@@ -1,3 +1,10 @@
+<?php
+  if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php?command=login');
+    exit;
+  }
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +17,9 @@
 </head>
 <body>
   <?php
-  if (session_status() === PHP_SESSION_NONE) {
-      session_start();
+  if (!isset($_SESSION['user_id'])) {
+    header('Location: index.php?command=login');
+    exit;
   }
   ?>
   <header class="header" role="banner">

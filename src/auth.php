@@ -21,6 +21,15 @@ function handle_signup($db) {
         $out['errors'][] = "Please enter a valid email address.";
         return $out;
     }
+    if (!preg_match('/^[A-Za-z\'\- ]{2,40}$/', $first) || !preg_match('/^[A-Za-z\'\- ]{2,40}$/', $last)) {
+        $out['errors'][] = "Names should only contain letters, spaces, apostrophes, or hyphens.";
+        return $out;
+    }
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/', $pass)) {
+        $out['errors'][] = "Password must have 8+ characters, including uppercase, lowercase, number, and symbol.";
+        return $out;
+    }
+
     if ($pass !== $confirm) {
         $out['errors'][] = "Passwords do not match.";
         return $out;
