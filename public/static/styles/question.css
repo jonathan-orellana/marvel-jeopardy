@@ -10,6 +10,10 @@
   --main-color: #FF2C2C;
 }
 
+section {
+  padding: 5rem;
+}
+
 .question-box {
   border: none;
   border-radius: 20px;

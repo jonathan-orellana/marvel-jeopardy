@@ -1,5 +1,5 @@
 -- users
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS app_user (
   id SERIAL PRIMARY KEY,             -- user ID (unique)
   first_name TEXT NOT NULL,          -- first name
   last_name TEXT NOT NULL,           -- last name

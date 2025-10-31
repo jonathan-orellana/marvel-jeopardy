@@ -1,5 +1,6 @@
 <?php
 class MarvelController {
+    private $db;
     private $input;   // $_GET
     private $errors = [];
 
@@ -26,6 +27,7 @@ class MarvelController {
             case 'home' : return $this->showHome();
             case 'login': return $this->showLogin();
             case 'signup': return $this->showSignup();
+            case 'create_game' : return $this->showCreateGame();
 
             //form submissions (post)
             case 'signup_submit': return $this->signupSubmit();
@@ -52,6 +54,12 @@ class MarvelController {
     private function showSignup() {
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/signup.php';
+        include __DIR__ . '/../public/templates/footer.php';
+    }
+
+    private function showCreateGame() {
+        include __DIR__ . '/../public/templates/header.php';
+        include __DIR__ . '/../public/templates/create-question.php';
         include __DIR__ . '/../public/templates/footer.php';
     }
 
@@ -84,7 +92,8 @@ class MarvelController {
             exit;
         }
         // if error, render form again with errors
-        $this->errors = $result['errors'];
+        $errors = $result['errors'] ?? [];
+        
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/signup.php';
         include __DIR__ . '/../public/templates/footer.php';
@@ -96,7 +105,9 @@ class MarvelController {
             header('Location: index.php?command=home');
             exit;
         }
-        $this->errors = $result['errors'];
+
+        $errors = $result['errors'] ?? [];
+
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/login.php';
         include __DIR__ . '/../public/templates/footer.php';
