@@ -1,8 +1,8 @@
 <?php
 class MarvelController {
-    private $db;
+    private $db; // Database object (Interact with db)
     private $input;   // $_GET
-    private $errors = [];
+    private $errors = []; // To store errors
 
     public function __construct($input) {
         $this->input = $input;
