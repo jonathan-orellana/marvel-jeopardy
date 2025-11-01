@@ -6,6 +6,8 @@ ini_set('display_errors', 1);
 // Bring in the controller
 require_once __DIR__ . '/../src/controller.php';
 
-// Instantiate the controller with GET params and run
+// Instantiate the controller with GET params
 $controller = new MarvelController($_GET);
+
+// Run controller 
 $controller->run();
