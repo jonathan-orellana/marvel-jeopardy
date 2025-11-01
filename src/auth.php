@@ -1,7 +1,6 @@
 <?php
-//auth model, does validation + insert user
+//auth model
 function handle_signup($db) {
-    // always return this shape
     $out = ['ok' => false, 'errors' => []];
 
     // collect data input (signup form)
@@ -21,6 +20,15 @@ function handle_signup($db) {
         $out['errors'][] = "Please enter a valid email address.";
         return $out;
     }
+    if (!preg_match('/^[A-Za-z\'\- ]{2,40}$/', $first) || !preg_match('/^[A-Za-z\'\- ]{2,40}$/', $last)) {
+        $out['errors'][] = "Names should only contain letters, spaces, apostrophes, or hyphens.";
+        return $out;
+    }
+    if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/', $pass)) {
+        $out['errors'][] = "Password must have 8+ characters, including uppercase, lowercase, number, and symbol.";
+        return $out;
+    }
+
     if ($pass !== $confirm) {
         $out['errors'][] = "Passwords do not match.";
         return $out;
@@ -53,14 +61,6 @@ function handle_signup($db) {
         $out['errors'][] = "Database error: " . pg_last_error($db);
         return $out;
     }
-
-    // success
-    if (session_status() === PHP_SESSION_NONE) { session_start(); }
-    $_SESSION['user'] = $first;
-    setcookie("last_email", $email, time() + 3600);
-
-    $out['ok'] = true;
-    return $out;
 }
 
 
@@ -96,10 +96,11 @@ function handle_login($db) {
         return $out;
     }
 
-    // success: set session + cookie
+    // set session + cookie
     if (session_status() === PHP_SESSION_NONE) { session_start(); }
-    $_SESSION['user_id']    = $u['id'];
+    $_SESSION['user_id']    = (int)$u['id'];
     $_SESSION['first_name'] = $u['first_name'];
+    $_SESSION['user']       = $u['first_name']; 
     setcookie("last_email", $email, time() + 3600);
 
     $out['ok'] = true;

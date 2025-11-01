@@ -114,6 +114,5 @@ class MarvelController {
         exit;
     }
 
-    /* Optional: expose errors to templates */
     public function errors() { return $this->errors; }
 }

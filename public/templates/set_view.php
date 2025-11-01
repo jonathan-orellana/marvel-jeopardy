@@ -2,10 +2,10 @@
 require __DIR__ . '/../../src/db.php';
 if (!$db) { echo "<p>DB connection not available.</p>"; return; }
 
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();
+if (!isset($_SESSION['user_id'])) {
+  header('Location: index.php?command=login');
+  exit;
 }
-if (!isset($_SESSION['user_id'])) { echo "<p>Please log in.</p>"; return; }
 
 $uid = $_SESSION['user_id'];
 $set_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -25,12 +25,6 @@ $q_res = pg_query_params($db,
 );
 ?>
 
-<?php
-  if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-  }
-  ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,8 +37,9 @@ $q_res = pg_query_params($db,
   </head>
   <body>
     <?php
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+    if (!isset($_SESSION['user_id'])) {
+      header('Location: index.php?command=login');
+      exit;
     }
     ?>
     <header class="header" role="banner">
@@ -91,7 +86,7 @@ $q_res = pg_query_params($db,
           $ct = $q['correct_text'] ?? '';
         ?>
         <li class="question-item" data-id="<?= $qid ?>" data-type="<?= htmlspecialchars($qtype) ?>">
-          <div class="question-header"><strong>#<?= $qid ?></strong> — <?= htmlspecialchars($qtype) ?></div>
+          <div class="question-header"><?= htmlspecialchars($qtype) ?></div>
 
           <label class="field-label">
             Question:
@@ -125,7 +120,7 @@ $q_res = pg_query_params($db,
           <form action="api/questions.php" method="POST" class="delete-form">
             <input type="hidden" name="action" value="delete_question">
             <input type="hidden" name="id" value="<?= $qid ?>">
-            <input type="hidden" name="redirect" value="/index.php?command=view_set&id=<?= (int)$set['id'] ?>">
+            <input type="hidden" name="redirect" value="../index.php?command=view_set&id=<?= (int)$set['id'] ?>">
             <button type="submit" class="btn-delete" onclick="return confirm('Delete this question?')">Delete</button>
           </form>
         </li>
@@ -138,7 +133,7 @@ $q_res = pg_query_params($db,
         <form action="api/questions.php" method="POST" class="delete-set-form">
           <input type="hidden" name="action" value="delete_set">
           <input type="hidden" name="set_id" value="<?= (int)$set['id'] ?>">
-          <input type="hidden" name="redirect" value="/index.php?command=sets">
+          <input type="hidden" name="redirect" value="../index.php?command=sets">
           <button type="submit" class="btn-delete-set" onclick="return confirm('Delete the whole set? This cannot be undone.')">
             Delete This Set
           </button>
