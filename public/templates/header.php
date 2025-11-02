@@ -14,9 +14,10 @@
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="static/styles/header.css">
+  <!-- Styles -->
   <link rel="stylesheet" href="static/styles/general.css">
-  <link rel="stylesheet" href="static/styles/home.css">
+  <link rel="stylesheet" href="static/styles/header.css">
+  <link rel="stylesheet" href="static/styles/footer.css">
 </head>
 
 <body>
@@ -45,11 +46,15 @@
       <a href="index.php?command=play">Play</a>
       <a href="index.php?command=about">About</a>
 
-      <!--if user login-->
+      <!--If session-->
       <?php if (isset($_SESSION['user'])): ?>
-        <a href="index.php?command=logout" class="login-link">Logout</a>
+        <a href="index.php?command=logout" class="login-link">
+          Logout
+        </a>
       <?php else: ?>
-        <a href="index.php?command=login" class="login-link">Login</a>
+        <a href="index.php?command=login" class="login-link">
+          Login
+        </a>
       <?php endif; ?>
     </nav>
   </header>

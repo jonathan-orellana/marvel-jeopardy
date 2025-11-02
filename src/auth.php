@@ -1,9 +1,11 @@
 <?php
-//auth model
 function handle_signup($db) {
-    $out = ['ok' => false, 'errors' => []];
+    $result = [
+        'ok' => false, 
+        'errors' => []
+    ];
 
-    // collect data input (signup form)
+    // Get data from body request
     $first   = trim($_POST['first_name'] ?? '');
     $last    = trim($_POST['last_name'] ?? '');
     $email   = trim($_POST['email'] ?? '');
@@ -11,100 +13,129 @@ function handle_signup($db) {
     $confirm = $_POST['confirm_password'] ?? '';
     $term = $_POST['terms'] ?? null;
 
-    // validations
+    // Validations
+
+    // Empty fields
     if ($first === '' || $last === '' || $email === '' || $pass === '' || $confirm === '') {
-        $out['errors'][] = "All fields are required.";
-        return $out;
+        $result['errors'][] = "All fields are required.";
+        return $result;
     }
+    // Valid email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $out['errors'][] = "Please enter a valid email address.";
-        return $out;
+        $result['errors'][] = "Please enter a valid email address.";
+        return $result;
     }
-    if (!preg_match('/^[A-Za-z\'\- ]{2,40}$/', $first) || !preg_match('/^[A-Za-z\'\- ]{2,40}$/', $last)) {
-        $out['errors'][] = "Names should only contain letters, spaces, apostrophes, or hyphens.";
-        return $out;
+    // Only latter names
+    if (!preg_match('/^[A-Za-z]{2,40}$/', $first) || !preg_match('/^[A-Za-z]{2,40}$/', $last)) {
+        $result['errors'][] = "Names should only contain letters.";return $result;
     }
+    // Password 8+ character
     if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/', $pass)) {
-        $out['errors'][] = "Password must have 8+ characters, including uppercase, lowercase, number, and symbol.";
-        return $out;
+        $result['errors'][] = "Password must have 8+ characters, including uppercase, lowercase, number, and symbol.";
+        return $result;
     }
-
+    // Password match
     if ($pass !== $confirm) {
-        $out['errors'][] = "Passwords do not match.";
-        return $out;
+        $result['errors'][] = "Passwords do not match.";
+        return $result;
     }
+    // Accept terms and conditions
     if (!isset($term)) {
-        $out['errors'][] = "Please accept the Terms and Conditions";
-        return $out;
+        $result['errors'][] = "Please accept the Terms and Conditions";
+        return $result;
     }
 
-
-    // check if user (email) already exists
+    // Check if email already exists
     $check = pg_query_params($db, 'SELECT 1 FROM app_user WHERE email = $1 LIMIT 1', [$email]);
     if ($check === false) {
-        $out['errors'][] = "Database error: " . pg_last_error($db);
-        return $out;
+        $result['errors'][] = "Database error: " . pg_last_error($db);
+        return $result;
     }
     if (pg_num_rows($check) > 0) {
-        $out['errors'][] = "That email is already registered.";
-        return $out;
+        $result['errors'][] = "That email already exist. Please login or use a different email.";
+        return $result;
     }
 
-    // hash the password (security)
+    // If everything looks fine, prepare to save
+
+    // Hash the password 
     $hash = password_hash($pass, PASSWORD_DEFAULT);
 
-    // insert user into the db
-    $q = 'INSERT INTO app_user (first_name, last_name, email, password_hash) VALUES ($1,$2,$3,$4)';
-    $ok = pg_query_params($db, $q, [$first, $last, $email, $hash]);
+    // Write a query to insert the user
+    $query = 'INSERT INTO app_user (first_name, last_name, email, password_hash) VALUES ($1,$2,$3,$4)';
 
+    // Save
+    $ok = pg_query_params($db, $query, [$first, $last, $email, $hash]);
+
+    // If something goes wrong while saving
     if (!$ok) {
-        $out['errors'][] = "Database error: " . pg_last_error($db);
-        return $out;
+        $result['errors'][] = "Database error: " . pg_last_error($db);
+        return $result;
     }
+
+    // Success
+    $_SESSION['user'] = (int)$userInfo['id'];
+    setcookie("last_email", $email, time() + 3600);
+    $result['ok'] = true;
+    return $result;
 }
 
 
-
 function handle_login($db) {
-    // Always return this shape
-    $out = ['ok' => false, 'errors' => []];
+    $result = [
+        'ok' => false, 
+        'errors' => []
+    ];
 
+    // Get data from body request
     $email = trim($_POST['email'] ?? '');
     $pass  = $_POST['password'] ?? '';
 
-    // basic validation
+    // Validations
+
+    // Empty fields
     if ($email === '' || $pass === '') {
-        $out['errors'][] = "Email and password are required.";
-        return $out;
+        $result['errors'][] = "Email and password are required.";
+        return $result;
     }
+    // Valid email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $out['errors'][] = "Please enter a valid email address.";
-        return $out;
+        $result['errors'][] = "Please enter a valid email address.";
+        return $result;
     }
 
-    // query user (use your actual table name: app_user or "user")
-    $sql = 'SELECT id, first_name, password_hash FROM app_user WHERE email = $1 LIMIT 1';
-    $res = pg_query_params($db, $sql, [$email]);
-    if ($res === false) {
-        $out['errors'][] = "Database error: " . pg_last_error($db);
-        return $out;
+    // Write a query to return the user
+    $query = 'SELECT id, first_name, password_hash FROM app_user WHERE email = $1 LIMIT 1';
+
+    // Get the user row
+    $userRow = pg_query_params($db, $query, [$email]);
+
+    if ($userRow === false) {
+        $result['errors'][] = "Database error: " . pg_last_error($db);
+        return $result;
     }
 
-    $u = pg_fetch_assoc($res);
-    if (!$u || !password_verify($pass, $u['password_hash'])) {
-        $out['errors'][] = "Invalid email or password.";
-        return $out;
+    // Convert the row into array
+    $userInfo = pg_fetch_assoc($userRow);
+
+    // Check the password
+    if (!$userInfo || !password_verify($pass, $userInfo['password_hash'])) {
+        $result['errors'][] = "Invalid email or password.";
+        return $result;
     }
 
-    // set session + cookie
-    if (session_status() === PHP_SESSION_NONE) { session_start(); }
-    $_SESSION['user_id']    = (int)$u['id'];
-    $_SESSION['first_name'] = $u['first_name'];
-    $_SESSION['user']       = $u['first_name']; 
+    // Set session + Cookie
+    if (session_status() === PHP_SESSION_NONE) { 
+        session_start(); 
+    }
+
+    // Session
+    $_SESSION['user'] = (int)$userInfo['id'];
     setcookie("last_email", $email, time() + 3600);
 
-    $out['ok'] = true;
-    return $out;
+    $result['ok'] = true;
+
+    return $result;
 }
 
 

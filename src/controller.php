@@ -7,23 +7,23 @@ class MarvelController {
     public function __construct($input) {
         $this->input = $input;
 
-        //start session
+        // Start session
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
         
-        //get php files (plain php)
+        // Bring in the db.php and auth.php
         require_once __DIR__ . '/db.php';   
         require_once __DIR__ . '/auth.php'; 
         $this->db = $db; 
     }
 
     public function run() {
-        //get command (command call) or set to login
+        // Get command from query
         $command = isset($this->input['command']) ? $this->input['command'] : 'home';
 
         switch ($command) {
-            //get view (render page)
+            // Get view
             case 'home' : return $this->showHome();
             case 'login': return $this->showLogin();
             case 'signup': return $this->showSignup();
@@ -31,7 +31,7 @@ class MarvelController {
             case 'sets': return $this->showSets();
             case 'view_set': return $this->showViewSet();
 
-            //form submissions (post)
+            // Model
             case 'signup_submit': return $this->signupSubmit();
             case 'login_submit': return $this->loginSubmit();
             case 'logout': return $this->logout();
@@ -40,7 +40,7 @@ class MarvelController {
         }
     }
 
-    //view
+    // View
     private function showHome() {
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/home.php';
@@ -77,17 +77,20 @@ class MarvelController {
         include __DIR__ . '/../public/templates/footer.php';
     }
 
-    // Submissions 
+    // Model 
     private function signupSubmit() {
-        //call auth model
         $result = handle_signup($this->db); 
+
+        // Redirect
         if ($result['ok']) {
             header('Location: index.php?command=login');
             exit;
         }
-        // if error, render form again with errors
+
+        // If error, populate $errors with error
         $errors = $result['errors'] ?? [];
-        
+
+        // Show page again
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/signup.php';
         include __DIR__ . '/../public/templates/footer.php';
@@ -95,13 +98,17 @@ class MarvelController {
 
     private function loginSubmit() {
         $result = handle_login($this->db);
+
+        // Redirect
         if ($result['ok']) {
             header('Location: index.php?command=home');
             exit;
         }
 
+        // If error, populate $errors with error
         $errors = $result['errors'] ?? [];
-
+        
+        // Show page again
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/login.php';
         include __DIR__ . '/../public/templates/footer.php';
@@ -110,9 +117,12 @@ class MarvelController {
     private function logout() {
         //destroy session and cookies
         session_destroy();
-        header('Location: index.php');
+        // Redirect
+        header('Location: index.php?command=login');
         exit;
     }
 
-    public function errors() { return $this->errors; }
+    public function errors() { 
+        return $this->errors;
+    }
 }

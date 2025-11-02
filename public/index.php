@@ -1,7 +1,10 @@
 <?php
-//https://cs4640.cs.virginia.edu/qrk9cs/marvel-jeopardy/public/index.php
+/*
+Website:
+https://cs4640.cs.virginia.edu/qrk9cs/marvel-jeopardy/public/index.php
 
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
+*/
+
 // Show errors during development
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

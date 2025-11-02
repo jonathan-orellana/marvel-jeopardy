@@ -138,9 +138,18 @@ section {
 
 .error-message {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 300px;
+  flex-wrap: wrap;
 }
+
+.error-message-text {
+  display: block;
+  color: red;
+  margin-bottom: 1rem;
+  font-size: 14px;
+  text-align: center;
+}
+
 
 .sign-up-button {
   margin-top: 2rem;

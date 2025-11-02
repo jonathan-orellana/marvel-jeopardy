@@ -4,6 +4,8 @@ Link to website:
 https://cs4640.cs.virginia.edu/qrk9cs/marvel-jeopardy/pages/home.html
 
 -->
+  <link rel="stylesheet" href="static/styles/home.css">
+
   <main id="main">
     <section class="home">
       <div class="content-container">
