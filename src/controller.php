@@ -66,6 +66,8 @@ class MarvelController {
     }
 
     private function showSets() {
+        $rows = $this->getSets();
+
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/sets.php';
         include __DIR__ . '/../public/templates/footer.php';
@@ -120,6 +122,23 @@ class MarvelController {
         // Redirect
         header('Location: index.php?command=login');
         exit;
+    }
+
+    // Need test (experimental)
+    private function getSets() { 
+        if (!isset($_SESSION['user'])) {
+        header('Location: index.php?command=login');
+        exit;
+        }
+
+        $userID = $_SESSION['user'];
+
+        $rows = pg_query_params($this->db,
+        "SELECT id, title, created_at FROM question_set WHERE user_id = $1 ORDER BY id DESC",
+        [$userID]
+        );
+
+        return $rows;
     }
 
     public function errors() { 

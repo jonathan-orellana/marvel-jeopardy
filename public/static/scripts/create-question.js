@@ -164,4 +164,3 @@ document.querySelector('#submit-questions').addEventListener('click', async () =
   }
 
 });
-

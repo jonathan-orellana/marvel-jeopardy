@@ -13,7 +13,7 @@ if (!isset($_SESSION['user'])) {
   exit;
 }
 
-$user = $_SESSION['user'];
+$user_id = $_SESSION['user'];
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
@@ -21,8 +21,8 @@ if ($method === 'GET') {
 
   if ($set_id > 0) {
     $q1 = pg_query_params($db,
-      "SELECT id, title, created_at FROM question_set WHERE id = $1 AND user = $2",
-      [$set_id, $user]
+      "SELECT id, title, created_at FROM question_set WHERE id = $1 AND user_id = $2",
+      [$set_id, $user_id]
     );
     if (!$q1 || pg_num_rows($q1) === 0) {
       echo json_encode(['ok' => false, 'error' => 'Set not found']); exit;
@@ -31,8 +31,8 @@ if ($method === 'GET') {
 
     $q2 = pg_query_params($db,
       "SELECT id, type, prompt, options, correct_index, correct_bool, correct_text
-       FROM question WHERE set_id = $1 AND user = $2 ORDER BY id ASC",
-      [$set_id, $user]
+       FROM question WHERE set_id = $1 AND user_id = $2 ORDER BY id ASC",
+      [$set_id, $user_id]
     );
     $questions = [];
     while ($row = pg_fetch_assoc($q2)) {
@@ -44,8 +44,8 @@ if ($method === 'GET') {
   }
 
   $res = pg_query_params($db,
-    "SELECT id, title, created_at FROM question_set WHERE user = $1 ORDER BY id DESC",
-    [$user]
+    "SELECT id, title, created_at FROM question_set WHERE user_id = $1 ORDER BY id DESC",
+    [$user_id]
   );
   $sets = [];
   while ($row = pg_fetch_assoc($res)) $sets[] = $row;
@@ -63,8 +63,8 @@ if ($method === 'POST') {
         echo json_encode(['ok' => false, 'error' => 'Missing id or prompt']); exit;
       }
       $res = pg_query_params($db,
-        "UPDATE question SET prompt = $1 WHERE id = $2 AND user = $3",
-        [$prompt, $id, $user]
+        "UPDATE question SET prompt = $1 WHERE id = $2 AND user_id = $3",
+        [$prompt, $id, $user_id]
       );
       echo json_encode(['ok' => (bool)$res]); exit;
     }
@@ -73,8 +73,8 @@ if ($method === 'POST') {
       $id = (int)($_POST['id'] ?? 0);
       if ($id <= 0) { echo json_encode(['ok' => false, 'error' => 'Missing id']); exit; }
       $res = pg_query_params($db,
-        "DELETE FROM question WHERE id = $1 AND user = $2",
-        [$id, $user]
+        "DELETE FROM question WHERE id = $1 AND user_id = $2",
+        [$id, $user_id]
       );
 
       if (!empty($_POST['redirect'])) {
@@ -88,8 +88,8 @@ if ($method === 'POST') {
       $set_id = (int)($_POST['set_id'] ?? 0);
       if ($set_id <= 0) { echo json_encode(['ok' => false, 'error' => 'Missing set_id']); exit; }
       $res = pg_query_params($db,
-        "DELETE FROM question_set WHERE id = $1 AND user = $2",
-        [$set_id, $user]
+        "DELETE FROM question_set WHERE id = $1 AND user_id = $2",
+        [$set_id, $user_id]
       );
 
       if (!empty($_POST['redirect'])) {
@@ -125,8 +125,8 @@ if ($method === 'POST') {
       }
       $sql = "UPDATE question
               SET type = $1, prompt = $2, options = $3, correct_index = $4, correct_bool = $5, correct_text = $6
-              WHERE id = $7 AND user = $8";
-      $params = [ $type, $prompt, $options, $ci, $cb, $ct, $id, $user ];
+              WHERE id = $7 AND user_id = $8";
+      $params = [ $type, $prompt, $options, $ci, $cb, $ct, $id, $user_id ];
       $res = pg_query_params($db, $sql, $params);
       echo json_encode(['ok' => (bool)$res]); exit;
     }
@@ -172,8 +172,8 @@ if ($method === 'POST') {
                   correct_index = $3,
                   correct_bool = $4,
                   correct_text = $5
-              WHERE id = $6 AND user = $7";
-      $params = [ $prompt, $options, $ci, $cb, $ct, $id, $user ];
+              WHERE id = $6 AND user_id = $7";
+      $params = [ $prompt, $options, $ci, $cb, $ct, $id, $user_id ];
       $res = pg_query_params($db, $sql, $params);
       if ($res) { $updated++; }
     }
@@ -186,8 +186,8 @@ if ($method === 'POST') {
   if ($title === '' || !is_array($items)) { echo json_encode(['ok' => false, 'error' => 'Missing title or questions']); exit; }
 
   $r1 = pg_query_params($db,
-    "INSERT INTO question_set (user, title) VALUES ($1, $2) RETURNING id",
-    [$user, $title]
+    "INSERT INTO question_set (user_id, title) VALUES ($1, $2) RETURNING id",
+    [$user_id, $title]
   );
   if (!$r1) {
     http_response_code(500);
@@ -215,9 +215,9 @@ if ($method === 'POST') {
       $ct = trim($q['correctText'] ?? '');
     }
 
-    $sql = "INSERT INTO question (user, set_id, type, prompt, options, correct_index, correct_bool, correct_text)
+    $sql = "INSERT INTO question (user_id, set_id, type, prompt, options, correct_index, correct_bool, correct_text)
             VALUES ($1,$2,$3,$4,$5,$6,$7,$8)";
-    $params = [ $user, $set_id, $type, $prompt, $options, $ci, $cb, $ct ];
+    $params = [ $user_id, $set_id, $type, $prompt, $options, $ci, $cb, $ct ];
     $res = pg_query_params($db, $sql, $params);
     if ($res) $inserted++;
   }
