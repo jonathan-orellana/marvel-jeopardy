@@ -1,4 +1,4 @@
-//// JAVASCRIPT OBJECTS /////
+////// JAVASCRIPT OBJECTS /////
 
 // Data structure 
 const questionList = [];
@@ -31,18 +31,19 @@ function ResponseQuestion() {
     correct: "",
   };
 }
-//// HTML GENERATOR /////
+
+// //// HTML GENERATOR /////
 
 // Questions Objects HTML
 function MultipleChoiceQuestionHTML(questionIndex) {
   const multipleChoiceQuestionHTML = `
-    <div class="question-box" data-type="multipleChoice">
+    <div class="question-box" data-type="multipleChoice" data-question-index="${questionIndex}">
       <h2>Question ${questionIndex + 1}</h2>
 
       <label>Type:
-        <select class="question-type">
-          <option value="multipleChoice">Multiple Choice</option>
-          <option value="trueFalse"selected="">True or False</option>
+        <select class="question-type" data-question-index="${questionIndex}">
+          <option value="multipleChoice" selected>Multiple Choice</option>
+          <option value="trueFalse">True or False</option>
           <option value="response">Response</option>
         </select>
       </label>
@@ -65,89 +66,90 @@ function MultipleChoiceQuestionHTML(questionIndex) {
           <input type="text" data-option-index="${questionIndex}-3" placeholder="Option 4" value="">
         </div>
 
-      <button class="remove-question" data-question-index=${questionIndex}>Remove</button>
+      <button class="remove-question" data-question-index="${questionIndex}">Remove</button>
     </div>
   `;
-
   return multipleChoiceQuestionHTML;
 }
 
 function TrueFalseQuestionHTML(questionIndex) {
   const trueFalseQuestionHTML = `
-    <div class="question-box" data-type="trueFalse">
+    <div class="question-box" data-type="trueFalse" data-question-index="${questionIndex}">
       <h2>Question ${questionIndex + 1}</h2>
 
       <label>Type:
-        <select class="question-type" data-type-index="0">
+        <select class="question-type" data-question-index="${questionIndex}">
           <option value="multipleChoice">Multiple Choice</option>
-          <option value="trueFalse"selected="">True or False</option>
+          <option value="trueFalse" selected>True or False</option>
           <option value="response">Response</option>
         </select>
       </label>
 
-      <textarea data-text-index="0" placeholder="Enter question..."></textarea>
+      <textarea class="question-text" placeholder="Enter question..."></textarea>
 
-        <div>
-          <label><input type="radio" name="tf-0" data-tf-index="0" value="true"> True</label>
-          <label><input type="radio" name="tf-0" data-tf-index="0" value="false"> False</label>
-        </div>
+      <div>
+        <label><input type="radio" name="tf-${questionIndex}" value="true"> True</label>
+        <label><input type="radio" name="tf-${questionIndex}" value="false"> False</label>
+      </div>
       
-      <button class="remove-question" data-question-index=${questionIndex}>Remove</button>
+      <button class="remove-question" data-question-index="${questionIndex}">Remove</button>
     </div>
   `;
-
   return trueFalseQuestionHTML;
 }
 
 function ResponseQuestionHTML(questionIndex) {
   const responseQuestionHTML = `
-    <div class="question-box" data-type="response">
+    <div class="question-box" data-type="response" data-question-index="${questionIndex}">
       <h2>Question ${questionIndex + 1}</h2>
 
       <label>Type:
-        <select class="question-type" data-type-index="0">
+        <select class="question-type" data-question-index="${questionIndex}">
           <option value="multipleChoice">Multiple Choice</option>
-          <option value="trueFalse"selected="">True or False</option>
-          <option value="response">Response</option>
+          <option value="trueFalse">True or False</option>
+          <option value="response" selected>Response</option>
         </select>
       </label>
 
-      <textarea data-text-index="0" placeholder="Enter question..."></textarea>
+      <textarea class="question-text" placeholder="Enter question..."></textarea>
 
-        <input class="answer-input" type="text" data-response-index="0" placeholder="Correct response" value="">
+      <input class="answer-input" type="text" placeholder="Correct response" value="">
       
-      <button class="remove-question" data-question-index=${questionIndex}>Remove</button>
+      <button class="remove-question" data-question-index="${questionIndex}">Remove</button>
     </div>
   `;
-
   return responseQuestionHTML;
 }
 
-//// RENDER /////
+// //// RENDER /////
 
 // Render
 let questionListHTML = '';
 let indexCount = 0;
 
 function renderQuestionsList() {
+  // ensure a default question exists
   if (questionList.length === 0) {
-    questionListHTML += MultipleChoiceQuestionHTML(indexCount);
+    questionList.push(MultipleChoiceQuestion());
   }
 
-  questionList.forEach(question => {
-    indexCount++;
-    const questionHTML = '';
+  // reset before rebuild
+  questionListHTML = '';
+  indexCount = 0;
 
-    if (question.type = "multipleChoice") {
-      questionHTML = MultipleChoiceQuestionHTML(indexCount);
-    }
-    if (question.type = "trueFalse") {
-      questionHTML = TrueFalseQuestionHTML(indexCount);
-    }
-    if (question.type = "response") {
-      questionHTML = ResponseQuestionHTML(indexCount);
-    }
+  questionList.forEach((question, questionIndex) => {
+    indexCount = questionIndex;
+    let questionHTML = '';
 
+    if (question.type === "multipleChoice") {
+      questionHTML = MultipleChoiceQuestionHTML(questionIndex);
+    }
+    if (question.type === "trueFalse") {
+      questionHTML = TrueFalseQuestionHTML(questionIndex);
+    }
+    if (question.type === "response") {
+      questionHTML = ResponseQuestionHTML(questionIndex);
+    }
     questionListHTML += questionHTML;
   });
 
@@ -162,117 +164,119 @@ function renderQuestionsList() {
   SubmitQuestionsEvent();
 }
 
-//// EVENT LISTENER /////
+// //// EVENT LISTENER /////
 
-// Add question event
+// Add question event ?????
 function AddQuestionEvent() {
   const addQuestionButton = document.querySelector('#add-question');
-
-  addQuestionButton.addEventListener('click', () => {
-    questionList.push(MultipleChoiceQuestion);
-
-  });
-  renderQuestionsList();
+  if (!addQuestionButton.dataset.bound) {
+    addQuestionButton.addEventListener('click', () => {
+      questionList.push(MultipleChoiceQuestion());
+      renderQuestionsList();
+    });
+    addQuestionButton.dataset.bound = "1";
+  }
 }
 
 // Remove question event
 function RemoveQuestionEvent() {
-  const removeQuestionButton = document.querySelectorAll('.remove-question');
+  const removeQuestionButtons = document.querySelectorAll('.remove-question');
 
-  removeQuestionButton.forEach( button => {
-    button.addEventListener('click', () => {
-      const questionIndex = button.target.dataset.questionIndex;
-
-      questionList.splice(questionIndex, 1 );;
+  removeQuestionButtons.forEach((removeButton) => {
+    removeButton.addEventListener('click', (event) => {
+      const questionIndex = Number(event.currentTarget.dataset.questionIndex);
+      questionList.splice(questionIndex, 1);
+      renderQuestionsList();
     });
   });
-  renderQuestionsList();
 }
 
 // Question type event 
 function ChangeQuestionTypeEvent() {
-  const dropDown = document.querySelectorAll('.question-type');
+  const dropdowns = document.querySelectorAll('.question-type');
 
-  dropDown.addEventListener('change', option => {
-    const value = option.target.value;
+  dropdowns.forEach((dropdown) => {
+    dropdown.addEventListener('change', (event) => {
+      const selectedType = event.target.value;
+      const questionIndex = Number(event.target.dataset.questionIndex);
 
-    if (value === "multipleChoice") {
-      questionList.splice(indexCount, 1, MultipleChoiceQuestion());
-    }
-    if (value === "trueFalse") {
-      questionList.splice(indexCount, 1, TrueFalseQuestion());
-    }
-    if (value === "response") {
-      questionList.splice(indexCount, 1, ResponseQuestion());
-    }
+      if (selectedType === "multipleChoice") {
+        questionList.splice(questionIndex, 1, MultipleChoiceQuestion());
+      }
+      if (selectedType === "trueFalse") {
+        questionList.splice(questionIndex, 1, TrueFalseQuestion());
+      }
+      if (selectedType === "response") {
+        questionList.splice(questionIndex, 1, ResponseQuestion());
+      }
+      renderQuestionsList();
+    });
   });
-  renderQuestionsList();
 }
 
 // Submit event
 function SubmitQuestionsEvent() {
   const submitQuestionButton = document.querySelector('#submit-questions');
-
-  submitQuestionButton.addEventListener('click', () => {
-    SaveAllQuestion();
-  })
-  window.location.href = "../../index.php?command=home";
+  if (!submitQuestionButton.dataset.bound) {
+    submitQuestionButton.addEventListener('click', () => {
+      SaveAllQuestion();
+      window.location.href = "../../index.php?command=home";
+    });
+    submitQuestionButton.dataset.bound = "1";
+  }
 }
 
 // Helpers 
 function SaveAllQuestion() {
+  // rebuild from DOM to the array
   questionList.length = 0;
   const questionBoxes = document.querySelectorAll(".question-box");
 
   questionBoxes.forEach((box) => {
-    const questionType = box.target.dataset.type;
+    const questionType = box.dataset.type;
 
-    if (questionType == 'multipleChoice') {
-      const question  = MultipleChoiceQuestion();
+    if (questionType === 'multipleChoice') {
+      const question = MultipleChoiceQuestion();
 
       const textArea = box.querySelector(".question-text");
       question.text = textArea.value;
 
       const optionInputs = box.querySelectorAll("input[type='text']");
-      optionInputs.forEach((input, index) => {
-        question.options[index] = input.value;
+      optionInputs.forEach((input, optionIndex) => {
+        question.options[optionIndex] = input.value;
       });
 
       const selectedRadio = box.querySelector("input[type='radio']:checked");
-      if (selectedRadio) {
-        question.correct = Number(selectedRadio.value);
-      } else {
-        question.correct = null; // none selected
-      }
+      question.correct = selectedRadio ? Number(selectedRadio.value) : null;
+
       questionList.push(question);
     }
     
-    if (questionType == 'trueFalse') {
-      const question  = TrueFalseQuestion();
+    if (questionType === 'trueFalse') {
+      const question = TrueFalseQuestion();
 
       const textArea = box.querySelector(".question-text");
       question.text = textArea.value;
 
       const selectedRadio = box.querySelector("input[type='radio']:checked");
-      if (selectedRadio) {
-        question.correct = Number(selectedRadio.value);
-      } else {
-        question.correct = null; // none selected
-      }
+      question.correct = selectedRadio ? (selectedRadio.value === "true") : null;
+
       questionList.push(question);
     }
       
-    if (questionType == 'response') {
-      const question  = ResponseQuestion();
+    if (questionType === 'response') {
+      const question = ResponseQuestion();
 
       const textArea = box.querySelector(".question-text");
       question.text = textArea.value;
 
-      const answer = box.querySelector(".answer-input");
-      question.correct = answer.value;
+      const answerInput = box.querySelector(".answer-input");
+      question.correct = answerInput.value;
+
       questionList.push(question);
     }
   });
 }
 
-
+// initial paint
+renderQuestionsList();
