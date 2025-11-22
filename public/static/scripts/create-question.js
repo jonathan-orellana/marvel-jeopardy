@@ -1,9 +1,5 @@
-////// JAVASCRIPT OBJECTS /////
-
-// Data structure 
 const questionList = [];
 
-// Questions Objects
 function MultipleChoiceQuestion() {
   return {
     id: Date.now(),
@@ -32,9 +28,6 @@ function ResponseQuestion() {
   };
 }
 
-// //// HTML GENERATOR /////
-
-// Questions Objects HTML
 function MultipleChoiceQuestionHTML(questionIndex) {
   const multipleChoiceQuestionHTML = `
     <div class="question-box" data-type="multipleChoice" data-question-index="${questionIndex}">
@@ -121,19 +114,15 @@ function ResponseQuestionHTML(questionIndex) {
   return responseQuestionHTML;
 }
 
-// //// RENDER /////
 
-// Render
 let questionListHTML = '';
 let indexCount = 0;
 
 function renderQuestionsList() {
-  // ensure a default question exists
   if (questionList.length === 0) {
     questionList.push(MultipleChoiceQuestion());
   }
 
-  // reset before rebuild
   questionListHTML = '';
   indexCount = 0;
 
@@ -153,20 +142,15 @@ function renderQuestionsList() {
     questionListHTML += questionHTML;
   });
 
-  // Render to the section
   const container = document.querySelector('#questions');
   container.innerHTML = questionListHTML;
 
-  // Add events
   AddQuestionEvent();
   RemoveQuestionEvent();
   ChangeQuestionTypeEvent();
   SubmitQuestionsEvent();
 }
 
-// //// EVENT LISTENER /////
-
-// Add question event ?????
 function AddQuestionEvent() {
   const addQuestionButton = document.querySelector('#add-question');
   if (!addQuestionButton.dataset.bound) {
@@ -178,7 +162,6 @@ function AddQuestionEvent() {
   }
 }
 
-// Remove question event
 function RemoveQuestionEvent() {
   const removeQuestionButtons = document.querySelectorAll('.remove-question');
 
@@ -191,7 +174,6 @@ function RemoveQuestionEvent() {
   });
 }
 
-// Question type event 
 function ChangeQuestionTypeEvent() {
   const dropdowns = document.querySelectorAll('.question-type');
 
@@ -214,21 +196,22 @@ function ChangeQuestionTypeEvent() {
   });
 }
 
-// Submit event
 function SubmitQuestionsEvent() {
   const submitQuestionButton = document.querySelector('#submit-questions');
   if (!submitQuestionButton.dataset.bound) {
     submitQuestionButton.addEventListener('click', () => {
-      SaveAllQuestion();
-      window.location.href = "../../index.php?command=home";
+      const result = SaveAllQuestion();
+      if (!result) {
+        return;
+      }
+      Submit();
     });
     submitQuestionButton.dataset.bound = "1";
   }
 }
 
-// Helpers 
+
 function SaveAllQuestion() {
-  // rebuild from DOM to the array
   questionList.length = 0;
   const questionBoxes = document.querySelectorAll(".question-box");
 
@@ -251,7 +234,7 @@ function SaveAllQuestion() {
 
       questionList.push(question);
     }
-    
+
     if (questionType === 'trueFalse') {
       const question = TrueFalseQuestion();
 
@@ -263,7 +246,7 @@ function SaveAllQuestion() {
 
       questionList.push(question);
     }
-      
+
     if (questionType === 'response') {
       const question = ResponseQuestion();
 
@@ -278,5 +261,40 @@ function SaveAllQuestion() {
   });
 }
 
-// initial paint
+async function sendQuestionsToBackend() {
+  try {
+    const response = await fetch("../../index.php?command=save_question", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        questions: questionList
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to save questions");
+    }
+
+    const data = await response.json();
+    console.log("Saved successfully:", data);
+
+    return data;
+  } catch (error) {
+    console.error("Error saving questions:", error);
+    return null;
+  }
+}
+
+async function Submit() {
+  const result = await sendQuestionsToBackend();
+
+  if (result) {
+    alert("Questions saved!");
+  } else {
+    //window.location.href = "../../index.php?command=home";
+  }
+}
+
 renderQuestionsList();

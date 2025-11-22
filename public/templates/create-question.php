@@ -13,6 +13,7 @@
   <div class="set-meta">
     <label>
       <span>Set Title</span>
+      <span class="error-message"></span>
       <input type="text" id="set-title" placeholder="My set">
     </label>
   </div>
