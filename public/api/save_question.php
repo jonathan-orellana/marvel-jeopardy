@@ -5,15 +5,22 @@ function handle_saveQuestionToDatabase($db) {
         'errors' => []
     ];
 
-    // Read
+    // Read JSON body
     $json = file_get_contents("php://input");
     $_POST = json_decode($json, true) ?? [];
 
     $questions = $_POST['questions'] ?? null;
     $user_id = $_POST['user_id'] ?? null;
+
+    // NEW: title for the set
+    $title = trim($_POST['title'] ?? '');
+
+    // If frontend doesn't send question_set_id, we will create one
     $question_set_id = $_POST['question_set_id'] ?? null;
 
+    // -----------------------------
     // Validation
+    // -----------------------------
     if (!$questions || !is_array($questions)) {
         $result['errors'][] = "No questions sent";
         return $result;
@@ -24,12 +31,26 @@ function handle_saveQuestionToDatabase($db) {
         return $result;
     }
 
-    if (!$question_set_id) {
-        $result['errors'][] = "Missing question_set_id";
+    // If question_set_id not provided, title is required to create a set
+    if (!$question_set_id && $title === '') {
+        $result['errors'][] = "Missing title for new question set";
         return $result;
     }
 
-    // Query
+    // -----------------------------
+    // Prepare insert statements
+    // -----------------------------
+    $insertSet = $db->prepare("
+        INSERT INTO question_set (title, user_id)
+        VALUES (:title, :uid)
+    ");
+
+    $updateSetTitle = $db->prepare("
+        UPDATE question_set
+        SET title = :title
+        WHERE id = :qsid
+    ");
+
     $insertQuestion = $db->prepare("
         INSERT INTO question (question_set_id, user_id, question_type, text)
         VALUES (:qsid, :uid, :type, :text)
@@ -55,10 +76,30 @@ function handle_saveQuestionToDatabase($db) {
         VALUES (:qid, :answer)
     ");
 
+    // -----------------------------
     // Save to database
+    // -----------------------------
     try {
         $db->beginTransaction();
 
+        // 1) Create a new question set if needed
+        if (!$question_set_id) {
+            $insertSet->execute([
+                ":title" => $title,
+                ":uid"   => $user_id
+            ]);
+            $question_set_id = $db->lastInsertId();
+        } else {
+            // Optional: if title is sent and set already exists, update title
+            if ($title !== '') {
+                $updateSetTitle->execute([
+                    ":title" => $title,
+                    ":qsid"  => $question_set_id
+                ]);
+            }
+        }
+
+        // 2) Insert each question
         foreach ($questions as $q) {
 
             $insertQuestion->execute([
@@ -70,6 +111,7 @@ function handle_saveQuestionToDatabase($db) {
 
             $question_id = $db->lastInsertId();
 
+            // MULTIPLE CHOICE
             if ($q["type"] === "multipleChoice") {
 
                 foreach ($q["options"] as $i => $opt) {
@@ -86,16 +128,18 @@ function handle_saveQuestionToDatabase($db) {
                 ]);
             }
 
+            // TRUE/FALSE
             if ($q["type"] === "trueFalse") {
                 $insertTF->execute([
-                    ":qid"    => $question_id,
+                    ":qid"     => $question_id,
                     ":is_true" => $q["correct"] ? 1 : 0
                 ]);
             }
 
+            // RESPONSE
             if ($q["type"] === "response") {
                 $insertResponse->execute([
-                    ":qid"   => $question_id,
+                    ":qid"    => $question_id,
                     ":answer" => $q["correct"]
                 ]);
             }
@@ -103,6 +147,7 @@ function handle_saveQuestionToDatabase($db) {
 
         $db->commit();
         $result['ok'] = true;
+        $result['question_set_id'] = $question_set_id; // return it to frontend
         return $result;
 
     } catch (Exception $e) {

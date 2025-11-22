@@ -200,75 +200,134 @@ function SubmitQuestionsEvent() {
   const submitQuestionButton = document.querySelector('#submit-questions');
   if (!submitQuestionButton.dataset.bound) {
     submitQuestionButton.addEventListener('click', () => {
+      const isTitle = SaveTitle();
+      if (!isTitle) return;
+
       const result = SaveAllQuestion();
-      if (!result) {
-        return;
-      }
+      if (!result) return;
+
       Submit();
     });
     submitQuestionButton.dataset.bound = "1";
   }
 }
 
+function SaveTitle() {
+  const setTitle = document.getElementById("set-title").value.trim();
+
+  if (!setTitle) {
+    document.querySelector(".error-message").textContent = "Please enter a title for your set.";
+    return false;
+  }
+  return true;
+}
 
 function SaveAllQuestion() {
-  questionList.length = 0;
   const questionBoxes = document.querySelectorAll(".question-box");
+  const errorSpan = document.querySelector(".error-message");
+
+  errorSpan.textContent = "";
+  questionList.length = 0;
+
+  let isValid = true;
 
   questionBoxes.forEach((box) => {
-    const questionType = box.dataset.type;
+    if (!isValid) return;
 
-    if (questionType === 'multipleChoice') {
+    const type = box.dataset.type;
+
+    const textArea = box.querySelector(".question-text");
+    if (!textArea || textArea.value.trim() === "") {
+      errorSpan.textContent = "You must fill all the fields.";
+      isValid = false;
+      return;
+    }
+
+    if (type === "multipleChoice") {
       const question = MultipleChoiceQuestion();
-
-      const textArea = box.querySelector(".question-text");
-      question.text = textArea.value;
+      question.text = textArea.value.trim();
 
       const optionInputs = box.querySelectorAll("input[type='text']");
-      optionInputs.forEach((input, optionIndex) => {
-        question.options[optionIndex] = input.value;
+
+      optionInputs.forEach((input) => {
+        if (!isValid) return;
+        if (input.value.trim() === "") {
+          errorSpan.textContent = "You must fill all the fields.";
+          isValid = false;
+          return;
+        }
+      });
+
+      if (!isValid) return;
+
+      optionInputs.forEach((input, index) => {
+        question.options[index] = input.value.trim();
       });
 
       const selectedRadio = box.querySelector("input[type='radio']:checked");
-      question.correct = selectedRadio ? Number(selectedRadio.value) : null;
+      if (!selectedRadio) {
+        errorSpan.textContent = "You must choose the correct answer.";
+        isValid = false;
+        return;
+      }
+
+      question.correct = Number(selectedRadio.value);
 
       questionList.push(question);
     }
 
-    if (questionType === 'trueFalse') {
+    if (type === "trueFalse") {
       const question = TrueFalseQuestion();
-
-      const textArea = box.querySelector(".question-text");
-      question.text = textArea.value;
+      question.text = textArea.value.trim();
 
       const selectedRadio = box.querySelector("input[type='radio']:checked");
-      question.correct = selectedRadio ? (selectedRadio.value === "true") : null;
+      if (!selectedRadio) {
+        errorSpan.textContent = "You must choose true or false.";
+        isValid = false;
+        return;
+      }
 
+      question.correct = selectedRadio.value === "true";
       questionList.push(question);
     }
 
-    if (questionType === 'response') {
+    if (type === "response") {
       const question = ResponseQuestion();
-
-      const textArea = box.querySelector(".question-text");
-      question.text = textArea.value;
+      question.text = textArea.value.trim();
 
       const answerInput = box.querySelector(".answer-input");
-      question.correct = answerInput.value;
+      if (!answerInput || answerInput.value.trim() === "") {
+        errorSpan.textContent = "You must provide a response answer.";
+        isValid = false;
+        return;
+      }
 
+      question.correct = answerInput.value.trim();
       questionList.push(question);
     }
   });
+
+  return isValid;
 }
+
 
 async function sendQuestionsToBackend() {
   try {
+    const setTitle = document.getElementById("set-title").value.trim();
+
+    if (!setTitle) {
+      const errorSpan = document.querySelector(".error-message");
+      errorSpan.textContent = "Please enter a title for your question set.";
+      return null;
+    }
+
     const response = await fetch("../../index.php?command=save_question", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        title: setTitle,
         questions: questionList
       })
     });
