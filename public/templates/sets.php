@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="static/styles/sets.css">
+<script defer src="static/scripts/sets.js"></script>
 
 <section>
   <h1>Your Question Sets</h1>
@@ -23,9 +24,31 @@
             <span><?= (int)$row['question_count'] ?> questions</span>
             —
             <a href="index.php?command=view_set&id=<?= (int)$row['id'] ?>">View</a>
+            —
+            <button
+              type="button"
+              class="delete-set-btn"
+              data-set-id="<?= (int)$row['id'] ?>"
+              data-set-title="<?= htmlspecialchars($row['title']) ?>"
+            >
+              Delete
+            </button>
           </li>
         <?php endwhile; ?>
       </ul>
     <?php endif; ?>
   <?php endif; ?>
 </section>
+
+<!-- Confirm Delete Modal -->
+<div id="deleteModalOverlay" class="modal-overlay hidden">
+  <div class="modal">
+    <h2>Delete set?</h2>
+    <p id="deleteModalText">Are you sure you want to delete this set?</p>
+
+    <div class="modal-actions">
+      <button id="confirmDeleteBtn" class="button danger">Yes, delete</button>
+      <button id="cancelDeleteBtn" class="button ghost">No</button>
+    </div>
+  </div>
+</div>

@@ -5,27 +5,20 @@ function handle_saveQuestionToDatabase($db) {
         'errors' => []
     ];
 
-    // Your fetch() sends JSON, not form-data,
-    // so convert JSON body into $_POST like you do in signup.
     $json = file_get_contents("php://input");
     $_POST = json_decode($json, true) ?? [];
 
-    // Get data (same style)
     $title = trim($_POST['title'] ?? '');
     $questions = $_POST['questions'] ?? null;
 
-    // Better: get user id from session, not client
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     $user_id = $_SESSION['user'] ?? null;
 
-    // Existing set optional
     $question_set_id = $_POST['question_set_id'] ?? null;
 
-    // -----------------------------
-    // Validations (early returns)
-    // -----------------------------
+    // Validations
     if (!$user_id) {
         $result['errors'][] = "You must be logged in.";
         return $result;
@@ -41,13 +34,30 @@ function handle_saveQuestionToDatabase($db) {
         return $result;
     }
 
-    // Validate each question structure
     foreach ($questions as $q) {
         $type = $q['type'] ?? '';
         $text = trim($q['text'] ?? '');
+        $category = trim($q['category'] ?? '');
+        $points = $q['points'] ?? null;
 
         if ($type === '' || $text === '') {
             $result['errors'][] = "All questions must have a type and text.";
+            return $result;
+        }
+
+        if ($category === '') {
+            $result['errors'][] = "Each question must have a category.";
+            return $result;
+        }
+
+        if ($points === null || !is_numeric($points)) {
+            $result['errors'][] = "Each question must have points.";
+            return $result;
+        }
+
+        $points = (int)$points;
+        if ($points < 100 || $points > 500) {
+            $result['errors'][] = "Points must be between 100 and 500.";
             return $result;
         }
 
@@ -87,10 +97,7 @@ function handle_saveQuestionToDatabase($db) {
         }
     }
 
-    // -----------------------------
-    // Save (pg_query_params style)
-    // -----------------------------
-    // Start transaction
+    // Save
     $ok = pg_query($db, "BEGIN");
     if (!$ok) {
         $result['errors'][] = "Database error: " . pg_last_error($db);
@@ -98,7 +105,7 @@ function handle_saveQuestionToDatabase($db) {
     }
 
     try {
-        // 1) Create a new set if needed
+        // Create / update set
         if (!$question_set_id) {
             $setQuery = "
                 INSERT INTO question_set (title, user_id)
@@ -113,7 +120,6 @@ function handle_saveQuestionToDatabase($db) {
 
             $question_set_id = (int) pg_fetch_result($setRes, 0, 'id');
         } else {
-            // Update title if set already exists
             $updQuery = "UPDATE question_set SET title = $1 WHERE id = $2 AND user_id = $3";
             $updRes = pg_query_params($db, $updQuery, [$title, $question_set_id, $user_id]);
 
@@ -122,18 +128,25 @@ function handle_saveQuestionToDatabase($db) {
             }
         }
 
-        // 2) Insert questions
+        // Insert questions
         foreach ($questions as $q) {
             $type = $q['type'];
             $text = trim($q['text']);
+            $category = trim($q['category']);
+            $points = (int)$q['points'];
 
             $qQuery = "
-                INSERT INTO question (question_set_id, user_id, question_type, text)
-                VALUES ($1, $2, $3, $4)
+                INSERT INTO question (question_set_id, user_id, category, points, question_type, text)
+                VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING id
             ";
             $qRes = pg_query_params($db, $qQuery, [
-                $question_set_id, $user_id, $type, $text
+                $question_set_id,
+                $user_id,
+                $category,
+                $points,
+                $type,
+                $text
             ]);
 
             if (!$qRes) {

@@ -1,11 +1,22 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 body {
   padding: 5rem;
   margin: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 
+}
+
+:root {
+  --main-color: #333;
+  /* neutral so you can override */
 }
 
 section {
@@ -13,52 +24,105 @@ section {
   width: clamp(300px, 80vw, 1200px);
 }
 
+main {
+  height: 100vh;
+  overflow-y: auto;
+  /* your header height */
+  box-sizing: border-box;
 
-.set-meta {
-  display: flex;
+  /* hide scrollbar but keep scroll functional */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
-.set-meta label input {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 8px 16px;
+main::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Edge, Safari */
 }
 
-.button-container {
-  margin-top: 12px;
+
+
+.error-message {
+  display: block;
+  min-height: 20px;
+  margin-top: 6px;
+}
+
+.form-wizard {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+}
+
+
+/* let steps stack normally */
+.steps-container {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+/* steps should take full width and be scrollable */
+.step {
+  width: 100%;
+  padding: 12px 4px;
+  display: grid;
+  gap: 12px;
+}
+
+/* hide only via display:none in JS */
+.step.current {
+  opacity: 1;
+}
+
+.form-wizard {
+  max-height: 100%;
+  overflow: visible;
+}
+
+
+
+
+#category-step,
+#questions-step {
+  display: grid;
+  gap: 12px;
+}
+
+#category-buttons {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#questions {
+  display: grid;
+  gap: 16px;
 }
 
 .question-box {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 1rem;
-  margin-top: 1rem;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 6px;
+  display: grid;
+  gap: 8px;
 }
 
-textarea {
+input[type="text"],
+textarea,
+select {
   width: 100%;
-  height: 60px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 8px 16px;
-  resize: vertical;
+  box-sizing: border-box;
 }
 
-input[type="text"] {
-  margin-left: 8px;
+.button-container {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
 }
 
-button {
-  cursor: pointer;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 20px;
-  color: white;
-  background: black;
-  font-weight: 600;
-  margin-top: 1rem;
+.button-container .button {
+  flex: 1;
 }
