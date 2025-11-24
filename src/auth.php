@@ -62,16 +62,19 @@ function handle_signup($db) {
     $hash = password_hash($pass, PASSWORD_DEFAULT);
 
     // Write a query to insert the user
-    $query = 'INSERT INTO app_user (first_name, last_name, email, password_hash) VALUES ($1,$2,$3,$4)';
+    $query = 'INSERT INTO app_user (first_name, last_name, email, password_hash) VALUES ($1,$2,$3,$4) RETURNING id';
 
     // Save
-    $ok = pg_query_params($db, $query, [$first, $last, $email, $hash]);
+    $result_row = pg_query_params($db, $query, [$first, $last, $email, $hash]);
 
     // If something goes wrong while saving
-    if (!$ok) {
+    if (!$result_row) {
         $result['errors'][] = "Database error: " . pg_last_error($db);
         return $result;
     }
+
+    // Get the new user ID
+    $userInfo = pg_fetch_assoc($result_row);
 
     // Success
     $_SESSION['user'] = (int)$userInfo['id'];
