@@ -1,0 +1,28 @@
+* {
+  list-style: none;
+}
+
+body {
+  padding: 5rem;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.button {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.question-set-list a {
+  text-decoration: underline;
+  color: #7e7c7c;
+}

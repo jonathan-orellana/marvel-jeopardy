@@ -1,3 +1,8 @@
+/* Authors / Contributions
+   Carlos Orellana
+   David Nu Nu
+*/
+
 :root {
   --bg-color: #fcfcfc;
   --second-bg-color: #f8f8f8;
@@ -41,11 +46,11 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); 
-  grid-template-rows: repeat(6, auto);   
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, auto);
   gap: 5px;
-  width: 100vw; 
-  height: calc(100vh - 100px); 
+  width: 100vw;
+  height: calc(100vh - 100px);
   box-sizing: border-box;
   padding: 2rem;
 }
@@ -88,4 +93,25 @@ body {
 .jeopardy-board {
   padding: 0;
   margin: 0;
+}
+
+/* Tablet (2–3 columns) */
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile (1–2 columns) */
+@media (max-width: 576px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    gap: 8px;
+  }
+
+  .cell, .category {
+    font-size: 0.9rem; /* smaller text on phones */
+    padding: 0.5rem;
+  }
 }

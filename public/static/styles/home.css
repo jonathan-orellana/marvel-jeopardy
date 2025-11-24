@@ -1,3 +1,8 @@
+/* Authors / Contributions
+   Carlos Orellana
+   David Nu Nu
+*/
+
 :root {
   --bg-color: #fcfcfc;
   --second-bg-color: #f8f8f8;
@@ -63,4 +68,26 @@
 
 .play-button {
   padding: 1rem 4.2rem;
+}
+
+/* Small phones */
+@media (max-width: 575px) {
+  .home .content-container .logo-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .home .content-container .logo-container .logo-image  {
+    width: 10rem;
+    height: auto;
+  }
+
+  .home .content-container .logo-container .logo-text  {
+    font-size: 4rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+  }
 }
