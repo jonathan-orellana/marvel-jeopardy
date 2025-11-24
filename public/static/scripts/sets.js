@@ -1,97 +1,147 @@
+// Sets Management with jQuery and AJAX
+// Handles dynamic deletion, loading, and DOM updates without page reload
+
 let pendingDeleteSetId = null;
 
-document.addEventListener("DOMContentLoaded", function () {
-  const modalOverlay = document.getElementById("deleteModalOverlay");
-  const modalMessage = document.getElementById("deleteModalText");
-  const confirmDeleteButton = document.getElementById("confirmDeleteBtn");
-  const cancelDeleteButton = document.getElementById("cancelDeleteBtn");
+// Use jQuery with document ready
+$(document).ready(() => {
+  const $modalOverlay = $("#deleteModalOverlay");
+  const $modalMessage = $("#deleteModalText");
+  const $confirmDeleteButton = $("#confirmDeleteBtn");
+  const $cancelDeleteButton = $("#cancelDeleteBtn");
 
-  function openDeleteModal(setId, setTitle) {
+  /**
+   * Opens the delete confirmation modal with the set title
+   * @param {number} setId - The ID of the set to delete
+   * @param {string} setTitle - The title of the set
+   */
+  const openDeleteModal = (setId, setTitle) => {
     pendingDeleteSetId = setId;
-    modalMessage.textContent = `Are you sure you want to delete "${setTitle}"?`;
-    modalOverlay.classList.remove("hidden");
-  }
+    $modalMessage.text(`Are you sure you want to delete "${setTitle}"?`);
+    $modalOverlay.removeClass("hidden");
+    // Add visual feedback - fade in effect
+    $modalOverlay.fadeIn(200);
+  };
 
-  function closeDeleteModal() {
+  /**
+   * Closes the delete confirmation modal
+   */
+  const closeDeleteModal = () => {
     pendingDeleteSetId = null;
-    modalOverlay.classList.add("hidden");
-  }
-
-  function removeSetFromPage(setId) {
-    const deleteButton = document.querySelector(
-      `.delete-set-btn[data-set-id="${setId}"]`
-    );
-    if (!deleteButton) return;
-
-    const listItem = deleteButton.closest("li");
-    if (listItem) listItem.remove();
-  }
-
-  async function requestDeleteSet(setId) {
-    const response = await fetch("index.php?command=delete_set", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: Number(setId) })
+    $modalOverlay.fadeOut(200, () => {
+      $modalOverlay.addClass("hidden");
     });
+  };
 
-    const rawText = await response.text();
-
-    try {
-      return JSON.parse(rawText);
-    } catch (e) {
-      console.error("Non-JSON response:", rawText);
-      throw new Error("Server didn't return JSON");
-    }
-  }
-
-  function bindDeleteButtons() {
-    document.querySelectorAll(".delete-set-btn").forEach(function (button) {
-      button.addEventListener("click", function () {
-        const setId = button.dataset.setId;
-        const setTitle = button.dataset.setTitle;
-        openDeleteModal(setId, setTitle);
+  /**
+   * Removes a set from the page by removing its list item
+   * @param {number} setId - The ID of the set to remove
+   */
+  const removeSetFromPage = (setId) => {
+    $(`.delete-set-btn[data-set-id="${setId}"]`)
+      .closest("li")
+      .fadeOut(300, function () {
+        $(this).remove();
+        // Check if no sets left, show empty message
+        if ($("li.question-set-list").length === 0) {
+          const $section = $("section");
+          $section.append("<p>You don't have any sets yet. Click \"Create a new set\".</p>");
+        }
       });
-    });
-  }
+  };
 
-  function bindCancelButton() {
-    cancelDeleteButton.addEventListener("click", function () {
-      closeDeleteModal();
-    });
-  }
+  /**
+   * Sends AJAX request to delete a set from the database
+   * @param {number} setId - The ID of the set to delete
+   * @returns {Promise} - Resolves with server response
+   */
+  const requestDeleteSet = async (setId) => {
+    try {
+      const response = await $.ajax({
+        url: "index.php?command=delete_set",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({ id: Number(setId) }),
+        dataType: "json"
+      });
+      return response;
+    } catch (error) {
+      console.error("AJAX Error:", error);
+      throw error;
+    }
+  };
 
-  function bindOverlayClickToClose() {
-    modalOverlay.addEventListener("click", function (event) {
-      if (event.target === modalOverlay) {
+  /**
+   * Binds click event to all delete buttons
+   * Uses event delegation with jQuery
+   */
+  const bindDeleteButtons = () => {
+    $(document).on("click", ".delete-set-btn", function () {
+      const setId = $(this).data("setId");
+      const setTitle = $(this).data("setTitle");
+      openDeleteModal(setId, setTitle);
+    });
+  };
+
+  /**
+   * Binds click event to cancel button
+   */
+  const bindCancelButton = () => {
+    $cancelDeleteButton.on("click", closeDeleteModal);
+  };
+
+  /**
+   * Binds click event to modal overlay to close modal
+   */
+  const bindOverlayClickToClose = () => {
+    $modalOverlay.on("click", function (event) {
+      if (event.target === this) {
         closeDeleteModal();
       }
     });
-  }
+  };
 
-  function bindConfirmDeleteButton() {
-    confirmDeleteButton.addEventListener("click", async function () {
+  /**
+   * Binds click event to confirm delete button with AJAX
+   */
+  const bindConfirmDeleteButton = () => {
+    $confirmDeleteButton.on("click", async function () {
       if (!pendingDeleteSetId) return;
+
+      // Disable button while processing
+      $(this).prop("disabled", true).text("Deleting...");
 
       try {
         const result = await requestDeleteSet(pendingDeleteSetId);
 
         if (!result.ok) {
-          alert((result.errors && result.errors.join("\n")) || "Delete failed.");
+          const errorMsg = (result.errors && result.errors.join("\n")) || "Delete failed.";
+          alert(errorMsg);
+          $(this).prop("disabled", false).text("Yes, delete");
           return;
         }
 
+        // Success - remove from page and close modal
         removeSetFromPage(pendingDeleteSetId);
         closeDeleteModal();
+        $(this).prop("disabled", false).text("Yes, delete");
 
       } catch (error) {
-        console.error(error);
+        console.error("Delete error:", error);
         alert("Something went wrong deleting the set.");
+        $(this).prop("disabled", false).text("Yes, delete");
       }
     });
-  }
+  };
 
+  // Initialize all event bindings
   bindDeleteButtons();
   bindCancelButton();
   bindOverlayClickToClose();
   bindConfirmDeleteButton();
+
+  // Example: Anonymous function for logging page load
+  (function () {
+    console.log("Sets page loaded at:", new Date().toLocaleTimeString());
+  })();
 });

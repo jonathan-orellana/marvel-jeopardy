@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="contributors" content="Authors: Carlos Orellana, David Nu Nu" >
   <title>About — Marvel Jeopardy</title>
-  <link rel="stylesheet" href="../styles/header.css" />
-  <link rel="stylesheet" href="../styles/general.css" />
-  <link rel="stylesheet" href="../styles/about.css" />
+  <link rel="stylesheet" href="static/styles/header.css" />
+  <link rel="stylesheet" href="static/styles/general.css" />
+  <link rel="stylesheet" href="static/styles/about.css" />
 </head>
 <body>
   <?php

@@ -2,6 +2,16 @@
 <html lang="en">
 
 <head>
+  <!-- 
+    Marvel Jeopardy Application
+    Authors: Carlos Orellana, David Nu Nu
+    
+    Sprint 4 Features:
+    - jQuery for dynamic DOM manipulation and AJAX
+    - Async/await for API calls
+    - Real-time form validation
+    - Modal interactions with visual feedback
+  -->
   <meta name="contributors" content="Authors: Carlos Orellana, David Nu Nu">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +28,9 @@
   <link rel="stylesheet" href="static/styles/general.css">
   <link rel="stylesheet" href="static/styles/header.css">
   <link rel="stylesheet" href="static/styles/footer.css">
+
+  <!-- jQuery Library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>

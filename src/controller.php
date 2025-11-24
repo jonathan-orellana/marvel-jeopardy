@@ -35,6 +35,8 @@ class MarvelController {
             case 'create_game' : return $this->showCreateGame();
             case 'sets': return $this->showSets();
             case "view_set": return $this->viewSet();
+            case 'about': return $this->showAbout();
+            case 'play': return $this->showPlay();
 
             // Model
             case 'signup_submit': return $this->signupSubmit();
@@ -81,6 +83,18 @@ class MarvelController {
 
         include __DIR__ . '/../public/templates/header.php';
         include __DIR__ . '/../public/templates/sets.php';
+        include __DIR__ . '/../public/templates/footer.php';
+    }
+
+    private function showAbout() {
+        include __DIR__ . '/../public/templates/header.php';
+        include __DIR__ . '/../public/templates/about.php';
+        include __DIR__ . '/../public/templates/footer.php';
+    }
+
+    private function showPlay() {
+        include __DIR__ . '/../public/templates/header.php';
+        include __DIR__ . '/../public/templates/jeopardy-board.php';
         include __DIR__ . '/../public/templates/footer.php';
     }
 
@@ -145,7 +159,7 @@ class MarvelController {
                 COUNT(q.id) AS question_count
             FROM question_set qs
             LEFT JOIN question q
-                ON q.question_set_id = qs.id
+                ON q.set_id = qs.id
             WHERE qs.user_id = $1
             GROUP BY qs.id
             ORDER BY qs.created_at DESC, qs.id DESC

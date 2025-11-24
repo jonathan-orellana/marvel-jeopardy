@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Marvel Jeopardy — Board</title>
 
-  <link rel="stylesheet" href="../styles/jeopardy-board.css" />
-  <link rel="stylesheet" href="../styles/general.css" />
-  <link rel="stylesheet" href="../styles/header.css" />
+  <link rel="stylesheet" href="static/styles/jeopardy-board.css" />
+  <link rel="stylesheet" href="static/styles/general.css" />
+  <link rel="stylesheet" href="static/styles/header.css" />
 </head>
 
 <body>
