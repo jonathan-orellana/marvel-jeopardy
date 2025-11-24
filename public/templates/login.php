@@ -60,3 +60,4 @@
 
 <!-- Scripts -->
 <script src="static/scripts/header.js"></script>
+<script src="static/scripts/login-validation.js"></script>

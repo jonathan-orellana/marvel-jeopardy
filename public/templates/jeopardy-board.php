@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="static/styles/jeopardy-board.css" />
   <link rel="stylesheet" href="static/styles/general.css" />
   <link rel="stylesheet" href="static/styles/header.css" />
+
+  <!-- jQuery Library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -88,6 +91,7 @@
     </section>
   </main>
 <script src="static/scripts/header.js"></script>
+<script src="static/scripts/play-board.js"></script>
 </body>
 
 </html>

@@ -49,3 +49,5 @@
 
 <!-- Scripts -->
 <script src="static/scripts/header.js"></script>
+<script src="static/scripts/signup-validation.js"></script>
+
