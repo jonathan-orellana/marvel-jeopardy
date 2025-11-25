@@ -1,2 +1,10 @@
 # Environment variables
 .env
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+vendor/
+composer.phar
+**/jquery*.js
