@@ -587,7 +587,7 @@ async function submitAllCategories() {
 
 async function sendAllQuestionsToBackend(setTitle, allQuestions) {
   try {
-    const response = await fetch("../../index.php?command=save_question", {
+    const response = await fetch("index.php?command=save_question", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
