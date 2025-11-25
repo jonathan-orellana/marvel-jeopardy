@@ -28,9 +28,21 @@
     <img class="menu-icon" src="static/assets/icons/menu.svg" alt="">
 
     <nav id="primary-nav" class="navbar" aria-label="Primary">
-      <a href="index.php?command=home" class="active" aria-current="page">Home</a>
-      <a href="index.php?command=play">Play</a>
-      <a href="index.php?command=about">About</a>
+      <?php
+        $currentCommand = $_GET['command'] ?? 'home';
+        $navItems = [
+          'home' => 'Home',
+          'sets' => 'My Sets',
+          'play' => 'Play',
+          'about' => 'About'
+        ];
+      ?>
+      
+      <?php foreach ($navItems as $cmd => $label): ?>
+        <a href="index.php?command=<?= $cmd ?>" <?= $currentCommand === $cmd ? 'class="active" aria-current="page"' : '' ?>>
+          <?= $label ?>
+        </a>
+      <?php endforeach; ?>
 
       <!--if user login-->
       <?php if (isset($_SESSION['user'])): ?>
