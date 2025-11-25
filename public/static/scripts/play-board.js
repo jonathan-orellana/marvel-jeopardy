@@ -1,19 +1,12 @@
 /**
  * Play Board Interaction Script
  * Handles Jeopardy board cell interactions - marking questions as answered
- * Authors: Carlos Orellana, David Nu Nu
+ * Authors: Carlos Orellana, David Nu Nu, Help from copilot/codex/claude to structure and debug
  * Sprint 4: Dynamic Behavior + JavaScript Object
  */
 
-/**
- * Question Object
- * Represents a Jeopardy question on the board
- * @constructor
- * @param {number} id - Unique question identifier
- * @param {string} category - Question category name
- * @param {number} points - Point value (100, 200, 300, 400, 500)
- * @param {boolean} answered - Whether the question has been answered
- */
+// Question object for each Jeopardy cell on the board
+// Stores id, category, points, and whether it's been answered
 const Question = function(id, category, points, answered = false) {
   this.id = id;
   this.category = category;
@@ -29,10 +22,7 @@ $(document).ready(() => {
   const categories = ['Authors', 'Characters', 'Movies', 'Quotes', 'Event'];
   const pointValues = [100, 200, 300, 400, 500];
 
-  /**
-   * Initialize all question objects
-   * Creates a Question object for each cell on the board
-   */
+  // Initialize all question objects: create a Question for each non-header cell
   const initializeQuestions = () => {
     const $cells = $('.grid .cell');
     
@@ -60,12 +50,8 @@ $(document).ready(() => {
     });
   };
 
-  /**
-   * Toggle answered state for a question cell
-   * Marks the question as answered and highlights the cell
-   * @param {jQuery} $cell - The clicked cell element
-   * @param {number} questionId - The question ID to toggle
-   */
+  // Toggle answered state for a question cell
+  // Marks the question as answered and highlights the cell
   const toggleAnswered = ($cell, questionId) => {
     // Find the question object
     const question = questions.find(q => q.id === questionId);

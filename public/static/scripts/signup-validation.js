@@ -1,7 +1,7 @@
 /**
  * Signup Form Validation
  * Provides client-side validation for signup form fields
- * Authors: Carlos Orellana, David Nu Nu
+ * Authors: Carlos Orellana, David Nu Nu, Help from copilot/codex/claude to structure and debug
  * Sprint 4: Input Validation Feature
  */
 
@@ -14,30 +14,18 @@ $(document).ready(() => {
   const $confirmPasswordInput = $form.find('input[name="confirm_password"]');
   const $termsCheckbox = $form.find('#terms');
 
-  /**
-   * Validate email format
-   * @param {string} email - Email address to validate
-   * @returns {boolean} - True if email is valid
-   */
+  // Check email format with a simple regex
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  /**
-   * Validate password strength (minimum 6 characters)
-   * @param {string} password - Password to validate
-   * @returns {boolean} - True if password meets requirements
-   */
+  // Password rule: at least 6 characters
   const isValidPassword = (password) => {
     return password.length >= 6;
   };
 
-  /**
-   * Display error message for a field
-   * @param {jQuery} $input - jQuery input element
-   * @param {string} message - Error message to display
-   */
+  // Show an error for a field: add error class and message element
   const showError = ($input, message) => {
     $input.addClass('input-error');
     let $errorDiv = $input.siblings('.error-text');
@@ -48,10 +36,7 @@ $(document).ready(() => {
     $errorDiv.text(message);
   };
 
-  /**
-   * Clear error message for a field
-   * @param {jQuery} $input - jQuery input element
-   */
+  // Clear error for a field: remove error class and message element
   const clearError = ($input) => {
     $input.removeClass('input-error');
     $input.siblings('.error-text').remove();

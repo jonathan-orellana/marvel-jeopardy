@@ -10,11 +10,8 @@ $(document).ready(() => {
   const $confirmDeleteButton = $("#confirmDeleteBtn");
   const $cancelDeleteButton = $("#cancelDeleteBtn");
 
-  /**
-   * Opens the delete confirmation modal with the set title
-   * @param {number} setId - The ID of the set to delete
-   * @param {string} setTitle - The title of the set
-   */
+  // Open the delete confirmation modal for a given set
+  // Stores the set id and shows the overlay with the set title
   const openDeleteModal = (setId, setTitle) => {
     pendingDeleteSetId = setId;
     $modalMessage.text(`Are you sure you want to delete "${setTitle}"?`);
@@ -23,9 +20,7 @@ $(document).ready(() => {
     $modalOverlay.fadeIn(200);
   };
 
-  /**
-   * Closes the delete confirmation modal
-   */
+  // Close the delete confirmation modal and reset the pending id
   const closeDeleteModal = () => {
     pendingDeleteSetId = null;
     $modalOverlay.fadeOut(200, () => {
@@ -33,10 +28,8 @@ $(document).ready(() => {
     });
   };
 
-  /**
-   * Removes a set from the page by removing its list item
-   * @param {number} setId - The ID of the set to remove
-   */
+  // Remove a set from the page by removing its list item
+  // Also shows an empty-state message if no sets are left
   const removeSetFromPage = (setId) => {
     $(`.delete-set-btn[data-set-id="${setId}"]`)
       .closest("li")
@@ -50,11 +43,8 @@ $(document).ready(() => {
       });
   };
 
-  /**
-   * Sends AJAX request to delete a set from the database
-   * @param {number} setId - The ID of the set to delete
-   * @returns {Promise} - Resolves with server response
-   */
+  // Send an AJAX request to delete a set on the server
+  // Returns the JSON response from the back-end
   const requestDeleteSet = async (setId) => {
     try {
       const response = await $.ajax({
@@ -71,10 +61,7 @@ $(document).ready(() => {
     }
   };
 
-  /**
-   * Binds click event to all delete buttons
-   * Uses event delegation with jQuery
-   */
+  // Bind click handler to all delete buttons using event delegation
   const bindDeleteButtons = () => {
     $(document).on("click", ".delete-set-btn", function () {
       const setId = $(this).data("setId");
@@ -83,16 +70,12 @@ $(document).ready(() => {
     });
   };
 
-  /**
-   * Binds click event to cancel button
-   */
+  // Bind click handler to the cancel button in the modal
   const bindCancelButton = () => {
     $cancelDeleteButton.on("click", closeDeleteModal);
   };
 
-  /**
-   * Binds click event to modal overlay to close modal
-   */
+  // Close the modal when clicking on the overlay background
   const bindOverlayClickToClose = () => {
     $modalOverlay.on("click", function (event) {
       if (event.target === this) {
@@ -101,9 +84,7 @@ $(document).ready(() => {
     });
   };
 
-  /**
-   * Binds click event to confirm delete button with AJAX
-   */
+  // Bind confirm delete button: send AJAX, handle response, update DOM
   const bindConfirmDeleteButton = () => {
     $confirmDeleteButton.on("click", async function () {
       if (!pendingDeleteSetId) return;

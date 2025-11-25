@@ -1,17 +1,13 @@
 /**
  * Sets Preview AJAX Script
  * Loads question set data via AJAX and renders it to the DOM
- * Authors: Carlos Orellana, David Nu Nu
+ * Authors: Carlos Orellana, David Nu Nu, Help from copilot/codex/claude to structure and debug
  * Sprint 4: AJAX JSON Consumption + DOM Rendering
  */
 
 $(document).ready(() => {
-  /**
-   * Load and display set preview via AJAX
-   * Fetches set questions from server and renders in modal
-   * @param {number} setId - The question set ID to preview
-   * @param {string} setTitle - The title of the set
-   */
+  // Load and display set preview via AJAX
+  // Fetches set questions from the server and renders them in a modal
   const loadSetPreview = (setId, setTitle) => {
     // Create modal if it doesn't exist
     let $previewModal = $('#set-preview-modal');

@@ -1,7 +1,7 @@
 /**
  * Login Form Validation
  * Provides client-side validation for email and password fields
- * Authors: Carlos Orellana, David Nu Nu
+ * Authors: Carlos Orellana, David Nu Nu, Help from copilot/codex/claude to structure and debug
  * Sprint 4: Input Validation Feature
  */
 
@@ -11,30 +11,19 @@ $(document).ready(() => {
   const $form = $('.login-form');
   const $submitButton = $form.find('button');
 
-  /**
-   * Validate email format
-   * @param {string} email - Email address to validate
-   * @returns {boolean} - True if email is valid
-   */
+  // Check if email is valid
+  // basic pattern: something@something.domain
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  /**
-   * Validate password length
-   * @param {string} password - Password to validate
-   * @returns {boolean} - True if password is at least 6 characters
-   */
+  // Basic password rule: True if password is at least 6 characters long
   const isValidPassword = (password) => {
     return password.length >= 6;
   };
 
-  /**
-   * Display error message for a field
-   * @param {jQuery} $input - jQuery input element
-   * @param {string} message - Error message to display
-   */
+  // Show an error on a given input: adds error class and message under the field
   const showError = ($input, message) => {
     $input.addClass('input-error');
     let $errorDiv = $input.siblings('.error-text');
@@ -45,16 +34,13 @@ $(document).ready(() => {
     $errorDiv.text(message);
   };
 
-  /**
-   * Clear error message for a field
-   * @param {jQuery} $input - jQuery input element
-   */
+  // Clear error state for an input: removes the class and the message under the field.
   const clearError = ($input) => {
     $input.removeClass('input-error');
     $input.siblings('.error-text').remove();
   };
 
-  // Email validation on blur
+  // Email validation when the field loses focus
   $emailInput.on('blur', function () {
     const email = $(this).val().trim();
     if (email === '') {
@@ -66,7 +52,7 @@ $(document).ready(() => {
     }
   });
 
-  // Password validation on blur
+  // Password validation when the field loses focus
   $passwordInput.on('blur', function () {
     const password = $(this).val();
     if (password === '') {
@@ -78,16 +64,17 @@ $(document).ready(() => {
     }
   });
 
-  // Clear errors on input
+  // Clear errors while the user is typing (email)
   $emailInput.on('input', function () {
     clearError($(this));
   });
 
+  // Clear errors while the user is typing (password)
   $passwordInput.on('input', function () {
     clearError($(this));
   });
 
-  // Form submission validation
+  // Final validation on submit
   $form.on('submit', function (e) {
     let isValid = true;
 
