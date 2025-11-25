@@ -182,11 +182,12 @@ function handle_saveQuestionToDatabase($db) {
 
             // True/False
             if ($type === "trueFalse") {
+                $correctValue = ($q['correct'] === true || $q['correct'] === 'true') ? 'true' : 'false';
                 $tfQuery = "
                     INSERT INTO true_false_answer (question_id, is_true)
-                    VALUES ($1, $2)
+                    VALUES ($1, $2::boolean)
                 ";
-                $tfRes = pg_query_params($db, $tfQuery, [$question_id, (bool)$q['correct']]);
+                $tfRes = pg_query_params($db, $tfQuery, [$question_id, $correctValue]);
 
                 if (!$tfRes) {
                     throw new Exception("Database error: " . pg_last_error($db));

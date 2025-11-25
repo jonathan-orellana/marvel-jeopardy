@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="static/styles/sets.css">
 <script defer src="static/scripts/sets.js"></script>
+<script defer src="static/scripts/sets-preview.js"></script>
 
 <section>
   <h1>Your Question Sets</h1>
@@ -24,6 +25,15 @@
             <span><?= (int)$row['question_count'] ?> questions</span>
             —
             <a href="index.php?command=view_set&id=<?= (int)$row['id'] ?>">View</a>
+            —
+            <button
+              type="button"
+              class="preview-set-btn"
+              data-set-id="<?= (int)$row['id'] ?>"
+              data-set-title="<?= htmlspecialchars($row['title']) ?>"
+            >
+              Preview
+            </button>
             —
             <button
               type="button"

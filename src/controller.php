@@ -46,6 +46,7 @@ class MarvelController {
             // Api
             case 'save_question': return $this->saveQuestion();
             case "delete_set": return $this->deleteSet();
+            case "get_set": return $this->getSet();
             case "update_questions":return $this->updateQuestions();
 
 
@@ -159,7 +160,7 @@ class MarvelController {
                 COUNT(q.id) AS question_count
             FROM question_set qs
             LEFT JOIN question q
-                ON q.set_id = qs.id
+                ON q.question_set_id = qs.id
             WHERE qs.user_id = $1
             GROUP BY qs.id
             ORDER BY qs.created_at DESC, qs.id DESC
@@ -215,6 +216,27 @@ class MarvelController {
 
         $result = handle_deleteSetFromDatabase($this->db, $set_id, $user_id);
 
+        echo json_encode($result);
+        exit;
+    }
+
+    private function getSet() {
+        header("Content-Type: application/json");
+
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $user_id = $_SESSION["user"] ?? null;
+        if (!$user_id) {
+            echo json_encode(["ok" => false, "errors" => ["You must be logged in."]]);
+            exit;
+        }
+
+        $set_id = (int)($_GET["id"] ?? 0);
+        
+        $result = handle_getSetWithQuestions($this->db, $set_id, $user_id);
+        
         echo json_encode($result);
         exit;
     }
