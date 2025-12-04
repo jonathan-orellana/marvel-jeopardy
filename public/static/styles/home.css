@@ -3,14 +3,6 @@
    David Nu Nu
 */
 
-body {
-  background-image: url("../assets/marvel-comic-background.jpg");
-  background-repeat: repeat;
-  background-size: auto;
-  background-position: top left;
-}
-
-
 :root {
   --bg-color: #fcfcfc;
   --second-bg-color: #f8f8f8;
@@ -18,11 +10,28 @@ body {
   --main-color: #FF2C2C;
 }
 
+html,
+body {
+  all: unset;
+}
+
+section {
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  margin-top: 70px;
+}
+
 .home {
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-image: url("../assets/marvel-comic-background.jpg");
+  background-repeat: repeat;
+  background-size: auto;
+  background-position: top left;
 }
 
 .home .content-container .logo-container {

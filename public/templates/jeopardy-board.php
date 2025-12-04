@@ -1,3 +1,19 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Prefer the value passed from the controller (showPlayBoard),
+// otherwise fall back to ?set_id=... or default to 1.
+$setId = isset($currentSetId) ? $currentSetId : ($_GET['set_id'] ?? 1);
+
+// Collect answered keys for this set (category:points)
+$answeredForSet = [];
+if (isset($_SESSION['answered'][$setId])) {
+    $answeredForSet = array_keys($_SESSION['answered'][$setId]);
+}
+$answeredJson = htmlspecialchars(json_encode($answeredForSet));
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,12 +32,6 @@
 </head>
 
 <body>
-
-  <?php
-  if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-  }
-  ?>
   <header class="header" role="banner">
     <a href="index.php?command=home" class="logo-link" aria-label="Marvel Jeopardy Home">
       <div class="logo-container">
@@ -35,8 +45,8 @@
     <img class="menu-icon" src="static/assets/icons/menu.svg" alt="">
 
     <nav id="primary-nav" class="navbar" aria-label="Primary">
-      <a href="index.php?command=home" class="active" aria-current="page">Home</a>
-      <a href="index.php?command=play">Play</a>
+      <a href="index.php?command=home" aria-current="page">Home</a>
+      <a href="index.php?command=play" class="active">Play</a>
       <a href="index.php?command=about">About</a>
 
       <!--if user login-->
@@ -48,9 +58,14 @@
     </nav>
   </header>
 
-
   <main id="main">
-    <section class="jeopardy-board">
+    <section
+      class="jeopardy-board"
+      role="region"
+      aria-label="Jeopardy board"
+      data-set-id="<?= htmlspecialchars($setId) ?>"
+      data-answered='<?= $answeredJson ?>'
+    >
       <div class="grid" role="table" aria-label="Jeopardy board">
         <div class="category" role="columnheader">Authors</div>
         <div class="category" role="columnheader">Characters</div>
@@ -90,8 +105,9 @@
       </div>
     </section>
   </main>
-<script src="static/scripts/header.js"></script>
-<script src="static/scripts/play-board.js"></script>
+
+  <script src="static/scripts/header.js"></script>
+  <script src="static/scripts/play-board.js"></script>
 </body>
 
 </html>

@@ -5,6 +5,7 @@ https://cs4640.cs.virginia.edu/qrk9cs/marvel-jeopardy/pages/home.html
 
 -->
   <link rel="stylesheet" href="static/styles/home.css">
+  <link rel="stylesheet" href="static/styles/footer.css">
 
   <main id="main">
     <section class="home">
@@ -14,9 +15,11 @@ https://cs4640.cs.virginia.edu/qrk9cs/marvel-jeopardy/pages/home.html
           <div class="logo-text">Jeopardy</div>
         </div>
         <div class="button-container">
-          <button class="button play-button">
-            Play
-          </button>
+          <a href="index.php?command=play">
+            <button class="button play-button">
+              Play
+            </button>
+          </a>
           <a href="index.php?command=create_game">
             <button class="button create-a-game-button">
             Create a Game
