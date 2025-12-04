@@ -6,7 +6,7 @@
   <h2 class="title">Available Games</h2>
 
   <a href="index.php?command=create_game">
-    <button class="button">Create a new game</button>
+    <button class="button create-new-game-button">Create a new game</button>
   </a>
 
   <?php if (!$rows): ?>

@@ -17,10 +17,14 @@ body {
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  background-color: black;
+  background-color: #FF2C2C;
   color: white;
   margin-bottom: 1rem;
   margin-left: 4px;
+}
+
+.create-new-game-button {
+  background-color: #000;
 }
 
 .edit-button {

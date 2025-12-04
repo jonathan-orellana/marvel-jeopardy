@@ -217,7 +217,7 @@ function TrueFalseQuestionHTML(question, questionIndex) {
 
       <textarea class="question-text" placeholder="Enter question...">${question.text ?? ""}</textarea>
 
-      <div>
+      <div class="trueorfalse-button">
         <label><input type="radio" name="tf-${questionIndex}" value="true" ${isTrue}> True</label>
         <label><input type="radio" name="tf-${questionIndex}" value="false" ${isFalse}> False</label>
       </div>

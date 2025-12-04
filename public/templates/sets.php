@@ -6,7 +6,7 @@
   <h2 class="title">Your Question Sets</h2>
 
   <a href="index.php?command=create_game">
-    <button class="button">Create a new set</button>
+    <button class="button create-new-game-button">Create a new set</button>
   </a>
 
   <?php if (!$rows): ?>
