@@ -58,7 +58,7 @@
         $currentCommand = $_GET['command'] ?? 'home';
         $navItems = [
           'home' => 'Home',
-          'sets' => 'My Sets',
+          'sets' => 'Games',
           'play' => 'Play',
           'about' => 'About'
         ];

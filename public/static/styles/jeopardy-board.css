@@ -112,6 +112,7 @@ body {
 
 .cell.answered {
   background-color: #555;
+  border: none;
   color: #ccc;
   pointer-events: none;
 }

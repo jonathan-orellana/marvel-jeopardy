@@ -20,23 +20,25 @@ body {
   background-color: black;
   color: white;
   margin-bottom: 1rem;
+  margin-left: 4px;
+}
+
+.edit-button {
+  margin-left: 20px;
+}
+
+.question-button {
+  padding: 4px 16px;
+}
+
+.title {
+  margin-top: 1rem;
 }
 
 .question-set-list a {
-  text-decoration: underline;
   color: #7e7c7c;
 }
 
-/* Delete button next to View */
-.delete-set-btn {
-  background: transparent;
-  border: none;
-  color: #b00020;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 0;
-}
 
 /* Modal overlay */
 .modal-overlay {

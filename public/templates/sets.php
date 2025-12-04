@@ -3,7 +3,7 @@
 <script defer src="static/scripts/sets-preview.js"></script>
 
 <section>
-  <h1>Your Question Sets</h1>
+  <h2 class="title">Your Question Sets</h2>
 
   <a href="index.php?command=create_game">
     <button class="button">Create a new set</button>
@@ -23,21 +23,24 @@
             <strong><?= htmlspecialchars($row['title']) ?></strong>
             —
             <span><?= (int)$row['question_count'] ?> questions</span>
-            —
-            <a href="index.php?command=view_set&id=<?= (int)$row['id'] ?>">View</a>
-            —
+          
+            <a href="index.php?command=view_set&id=<?= (int)$row['id'] ?>">
+              <button class="button edit-button question-button">
+                Edit
+              </button>
+            </a>
+      
             <button
               type="button"
-              class="preview-set-btn"
+              class="preview-set-btn button question-button"
               data-set-id="<?= (int)$row['id'] ?>"
               data-set-title="<?= htmlspecialchars($row['title']) ?>"
             >
               Preview
             </button>
-            —
             <button
               type="button"
-              class="delete-set-btn"
+              class="delete-set-btn button question-button"
               data-set-id="<?= (int)$row['id'] ?>"
               data-set-title="<?= htmlspecialchars($row['title']) ?>"
             >

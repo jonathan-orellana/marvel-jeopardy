@@ -1,0 +1,22 @@
+body {
+  padding: 5rem;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.sets-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-top: 1rem;
+}
+
+.play-button {
+  padding: 4px 16px;
+  margin-left: 1rem;
+}

@@ -1,44 +1,40 @@
-<?php
-// public/templates/play.php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
-<main id="main">
-  <section class="sets-list">
-    <h1>Your Question Sets</h1>
+<link rel="stylesheet" href="static/styles/sets.css">
+<link rel="stylesheet" href="static/styles/play.css">
+<script defer src="static/scripts/sets.js"></script>
 
-    <?php if (!isset($rows) || pg_num_rows($rows) === 0): ?>
-      <p>You don't have any sets yet. Create one first, then come back to play!</p>
-      <p><a href="index.php?command=create_game">Create a new set</a></p>
+<section>
+  <h2 class="title">Available Games</h2>
+
+  <a href="index.php?command=create_game">
+    <button class="button">Create a new game</button>
+  </a>
+
+  <?php if (!$rows): ?>
+    <p class="error-message">Could not load available games right now.</p>
+
+  <?php else: ?>
+    <?php if (pg_num_rows($rows) === 0): ?>
+      <p>No games available. Click “Create a new game”.</p>
+
     <?php else: ?>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Questions</th>
-            <th>Created</th>
-            <th>Play</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php while ($row = pg_fetch_assoc($rows)): ?>
-            <tr>
-              <td><?= htmlspecialchars($row['title']) ?></td>
-              <td><?= htmlspecialchars($row['question_count']) ?></td>
-              <td><?= htmlspecialchars($row['created_at']) ?></td>
-              <td>
-              <a
-                href="index.php?command=play_board&set_id=<?= (int)$row['id'] ?>&reset=1"
-                class="btn-play-set"
-              >
-                Play this set
-              </a>
-              </td>
-            </tr>
-          <?php endwhile; ?>
-        </tbody>
-      </table>
+      <ul>
+        <?php while ($row = pg_fetch_assoc($rows)): ?>
+          <li class="question-set-list">
+            <strong><?= htmlspecialchars($row['title']) ?></strong>
+            —
+            <span><?= (int)$row['question_count'] ?> questions</span>
+            
+            <a 
+              href="index.php?command=play_board&set_id=<?= (int)$row['id'] ?>&reset=1"
+              class="play-game-btn"
+            >
+            <button class="button play-button">
+              Play
+            </button>
+            </a>
+          </li>
+        <?php endwhile; ?>
+      </ul>
     <?php endif; ?>
-  </section>
-</main>
+  <?php endif; ?>
+</section>
